@@ -6,16 +6,16 @@ import './TodosList.css';
 import TodoItem from './TodoItem';
 
 
-const TodosList = ( props ) => (
+const TodosList = ( { todos } ) => (
   <div className="TodosList">
 
-    { generateTodos( props.todos, props.fnArchiveTodo ) }
+    { generateTodos( todos ) }
 
   </div>
 );
 
 
-const generateTodos = function generateTodos( todos, fnArchiveTodo ) {
+const generateTodos = function generateTodos( todos ) {
   if ( todos.length === 0 ) {
     return <em>Aucune tâche</em>;
   }
@@ -24,7 +24,6 @@ const generateTodos = function generateTodos( todos, fnArchiveTodo ) {
     <TodoItem
       key={ todo.id }
       todo={ todo }
-      fnArchiveTodo={ fnArchiveTodo }
     />
   ));
 

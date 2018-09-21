@@ -1,15 +1,16 @@
 // @ts-check
 
 import React from 'react';
-import './TodosView.css';
 
+import './TodosView.css';
 import TodosHeader from './TodosHeader';
 import TodoInput from './TodoInput';
 import TodosFilter, { TODOS_FILTERS } from './TodosFilter';
 import TodosList from './TodosList';
 
+// import { FAKE_ITEMS } from '../sample-data';
+import { ContextItemsArchive } from '../contexts/TodoItemsContext';
 
-import { FAKE_ITEMS } from '../sample-data';
 
 class TodosView extends React.Component {
 
@@ -204,11 +205,9 @@ class TodosView extends React.Component {
         fnFilterChange={ this.handleFilterChange }
       />
 
-      {/* IDEA: use Context for the event passed to items to avoid "props drilling" */}
-      <TodosList
-        todos={ this.state.currentTodos }
-        fnArchiveTodo={ this.handleArchiveTodo }
-      />
+      <ContextItemsArchive.Provider value={ this.handleArchiveTodo }>
+        <TodosList todos={ this.state.currentTodos } />
+      </ContextItemsArchive.Provider>
 
     </div>
   );

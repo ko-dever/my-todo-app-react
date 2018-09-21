@@ -8,8 +8,7 @@ import './TodoInput.css';
 class TodoInput extends React.Component {
 
   state = {
-    // text of the todo to add
-    todoText: '',
+    todoText: '', // text of the todo to add
   };
 
 
@@ -23,7 +22,8 @@ class TodoInput extends React.Component {
       return;
     }
 
-    // execute the function passed by the component which controls this one
+    // execute the function passed in the props
+    // by the component which controls this one
     this.props.fnAddTodo( todoToAdd )
 
     // update private state
