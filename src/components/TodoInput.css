@@ -1,0 +1,14 @@
+:root {
+    --TodoInputPadding: 10px;
+}
+
+.TodoInput {
+    margin: 20px 0 0;
+}
+
+.TodoInput-input {
+    width  : calc( 100% - (var(--TodoInputPadding) * 2) );
+    height : 40px;
+    padding: 0 var(--TodoInputPadding);
+    border : 0;
+}

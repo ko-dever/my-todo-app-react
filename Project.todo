@@ -1,0 +1,15 @@
+
+React Test ToDo App:
+  ☐ Try to make a composition for list items (different types active/completed/archived)
+    An "active item" is almost the same as a "completed item" and "archived item", except for their style.
+    See : https://reactjs.org/docs/composition-vs-inheritance.html
+  ☐ Implements dynamic import when possible
+  ☐ Implement defaultPropTypes and propTypes
+  ✔ Export TODOS_FILTERS from the filter component @done(18-09-20 17:44)
+    Use filters key to populate the main view and to check buttons value when clicked
+  ☐ Try to include remote data fetching using https://www.mockapi.io/docs for example
+  ☐ Implement other buttons to delete, unarchive and finish items
+  ☐ Use Styled Components instead of having classes non reused
+    See : http://styled-components.com/
+  ☐ Keep focus on the input when filter changes
+  ☐ Isolate each component in their own folder with an entry point `index.js`
