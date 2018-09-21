@@ -12,5 +12,5 @@ React Test ToDo App:
   ☐ Use Styled Components instead of having classes non reused
     See : http://styled-components.com/
   ☐ Keep focus on the input when filter changes
-  ☐ Isolate each component in their own folder with an entry point `index.js`
+  ✔ Isolate each component in their own folder with an entry point `index.js` @done(18-09-21 20:33)
   ✔ Implements Context to avoid "props drilling" through many components @done(18-09-21 20:05)
