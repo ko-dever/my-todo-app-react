@@ -13,3 +13,4 @@ React Test ToDo App:
     See : http://styled-components.com/
   ☐ Keep focus on the input when filter changes
   ☐ Isolate each component in their own folder with an entry point `index.js`
+  ☐ Implements Context to avoid "props drilling" through many components
