@@ -2,8 +2,6 @@
 
 import React from 'react';
 
-import './TodosHeader.css';
-
 
 const TodosHeader = ({ nbTodos }) => (
   <header className="TodosHeader">

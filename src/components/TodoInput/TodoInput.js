@@ -2,8 +2,6 @@
 
 import React from 'react';
 
-import './TodoInput.css';
-
 
 class TodoInput extends React.Component {
 

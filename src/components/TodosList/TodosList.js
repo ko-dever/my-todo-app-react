@@ -2,8 +2,7 @@
 
 import React from 'react';
 
-import './TodosList.css';
-import TodoItem from './TodoItem';
+import TodoItem from '../TodoItem';
 
 
 const TodosList = ( { todos } ) => (

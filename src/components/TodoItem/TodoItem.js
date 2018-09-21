@@ -2,8 +2,7 @@
 
 import React from 'react';
 
-import './TodoItem.css';
-import { ContextItemsArchive } from '../contexts/TodoItemsContext';;
+import { ContextItemsArchive } from '../../contexts/TodoItemsContext';;
 
 
 const TodoItem = ( { todo } ) => (

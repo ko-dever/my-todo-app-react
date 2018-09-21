@@ -2,8 +2,6 @@
 
 import React from 'react';
 
-import './TodosFilter.css';
-
 
 const TODOS_FILTERS = Object.freeze({
   active   : { key: 'active',    title: 'Active',    },

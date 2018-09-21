@@ -2,8 +2,7 @@
 
 import React from 'react';
 
-import './App.css';
-import TodosView from './components/TodosView';
+import TodosView from '../TodosView';
 
 
 const App = () => (
