@@ -25,7 +25,7 @@ class TodosView extends React.Component {
 
     /* // NOTE: do not call `setState()` inside the constructor
      *
-     * We could have call `getTodosToDisplay()` inside `componentDidMount()`
+     * We could have called `getTodosToDisplay()` inside `componentDidMount()`
      * but as the `constructor` is triggered before anything else we use this
      * opportunity to set the correct value.
      *
@@ -33,6 +33,29 @@ class TodosView extends React.Component {
      */
     this.currentTodos = this.getTodosToDisplay();
   }
+
+
+  /**
+   * Evaluate if the component needs to be re-rendered
+   * @see https://reactjs.org/docs/react-component.html#shouldcomponentupdate
+   */
+  shouldComponentUpdate = ( nextProps, nextState ) => {
+    // if current filter is 'active', allow render
+    // we need to update the view if the user adds a todo
+    if ( this.state.todosFilter === TODOS_FILTERS.active.key ) {
+      return true;
+    }
+
+    // If after an update of the component the filter is still the same, block the render.
+    // Example, we are on the list/filter 'archived' and we add a todo
+    // => we don't need to trigger a new render as the new todo is for the list/filter 'active'
+    if ( nextState.todosFilter === this.state.todosFilter ) {
+      console.info( 'TodosView.shouldComponentUpdate() Filter is still the same, block render' );
+      return false;
+    }
+
+    return true;
+  };
 
 
   /** Guess what initial view to render */

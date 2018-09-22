@@ -1,35 +1,29 @@
 React Test ToDo App:
-☐ Try to make a composition for list items (different types active/completed/archived)
-  An "active item" is almost the same as a "completed item" and "archived item", except for their style.
-  See : https://reactjs.org/docs/composition-vs-inheritance.html
-☐ Implements dynamic import when possible
-☐ Implement defaultPropTypes and propTypes
-☐ Try to include remote data fetching using https://www.mockapi.io/docs for example
-☐ Implement other buttons to delete, unarchive and finish items
-☐ Use Styled Components instead of having classes non reused
-  See : http://styled-components.com/
-☐ Sort archived items by the date when they were archived
-☐ Implement `TodosView.shouldComponentUpdate()` when filter changes ?
-  When we add a todo => it is added into the list of "active items"
-  But if it is done when we are on a diffent list (than "active items"),
-  we don't need to trigger a new render of the view as the added item won't be visible
-  => Test the current filter, if !== than "active" => allow the update
-  Example, we are on the list (=== filter) "archived" and we add a new todo, unnecessary renders =>
-    TodosView render() TodosView.js:228
-    getTodosToDisplay() Called with filter [ archived ] TodosView.js:142
-    getTodosToDisplay(), Return items already stored TodosView.js:132
-    TodoInput render()
-☐ Organize items into different Arrays (in state?), with a key (the filter?) pointing to displayed items ?
-  state = {
-    filter: 'archived',
-    todos : { archived: [ ...], completed: [...], active: [...] }
-  }
+  ☐ Try to make a composition for list items (different types active/completed/archived)
+    An "active item" is almost the same as a "completed item" and "archived item", except for their style.
+    See : https://reactjs.org/docs/composition-vs-inheritance.html
+  ☐ Implements dynamic import when possible
+  ☐ Implement defaultPropTypes and propTypes
+  ☐ Try to include remote data fetching using https://www.mockapi.io/docs for example
+  ☐ Implement other buttons to delete, unarchive and finish items
+  ☐ Use Styled Components instead of having classes non reused
+    See : http://styled-components.com/
+  ☐ Sort archived items by the date when they were archived
+  ☐ Organize items into different Arrays (in state?), with a key (the filter?) pointing to displayed items ?
+    state = {
+      filter: 'archived',
+      todos : { archived: [ ...], completed: [...], active: [...] }
+    }
 
 Archive:
-✔ Keep focus on the input when filter changes @done(18-09-22 18:57) @project(React Test ToDo App)
-✔ Export TODOS_FILTERS from the filter component @done(18-09-20 17:44) @project(React Test ToDo App)
-  Use filters key to populate the main view and to check buttons value when clicked
-✔ Isolate each component in their own folder with an entry point `index.js` @done(18-09-21 20:33) @project(React Test ToDo App)
-✔ Implements Context to avoid "props drilling" through many components @done(18-09-21 20:05) @project(React Test ToDo App)
-✔ Change keys (marks) on the items to something more simple @done(18-09-22 18:54) @project(React Test ToDo App)
-  item.completed => item.isCompleted / item.archived => item.isArchived
+  ✔ Implement `TodosView.shouldComponentUpdate()` when filter changes ? @done(18-09-22 20:25) @project(React Test ToDo App)
+    When we add a todo => it is added to the list of "active items".
+    But if it is done when we are on a diffent list (than "active items"),
+    we don't need to trigger a new render of the view as the added item won't be visible.
+  ✔ Keep focus on the input when filter changes @done(18-09-22 18:57) @project(React Test ToDo App)
+  ✔ Export TODOS_FILTERS from the filter component @done(18-09-20 17:44) @project(React Test ToDo App)
+    Use filters key to populate the main view and to check buttons value when clicked
+  ✔ Isolate each component in their own folder with an entry point `index.js` @done(18-09-21 20:33) @project(React Test ToDo App)
+  ✔ Implements Context to avoid "props drilling" through many components @done(18-09-21 20:05) @project(React Test ToDo App)
+  ✔ Change keys (marks) on the items to something more simple @done(18-09-22 18:54) @project(React Test ToDo App)
+    item.completed => item.isCompleted / item.archived => item.isArchived

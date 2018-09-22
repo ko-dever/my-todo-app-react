@@ -3,14 +3,19 @@
 import React from 'react';
 
 
+// we could have used `PureComponent` instead of `Component` to take advantage
+// of the (native) implementation of `shouldComponentUpdate()` for a shallow
+// comparison for props and state and avoid unnecessary re-renders,
+// but this whould have prevented the execute of `componentDidUpdate()`
 class TodoInput extends React.Component {
 
   state = {
     todoText: '', // current value of the <input>
   };
 
+
   // create a ref to store the textInput DOM element
-  // https://reactjs.org/docs/refs-and-the-dom.html
+  // See : https://reactjs.org/docs/refs-and-the-dom.html
   textInput = React.createRef();
 
 
