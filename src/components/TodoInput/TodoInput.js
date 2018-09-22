@@ -6,7 +6,29 @@ import React from 'react';
 class TodoInput extends React.Component {
 
   state = {
-    todoText: '', // text of the todo to add
+    todoText: '', // current value of the <input>
+  };
+
+  // create a ref to store the textInput DOM element
+  // https://reactjs.org/docs/refs-and-the-dom.html
+  textInput = React.createRef();
+
+
+  /** React lifecycle method */
+  componentDidUpdate = () => {
+    console.log( 'TodoInput did update' );
+    // each time the component is rendered, keep the focus
+    // no need to do this in componentDidMount() : the <input> has the autoFocus attribute
+    this.focusTextInput();
+  };
+
+
+  /** Focus the text input */
+  focusTextInput = () => {
+    console.log( 'TodoInput.focusTextInput()' );
+    // Focus the text input using the raw DOM API
+    // Note: we're accessing "current" to get the DOM node
+    this.textInput.current.focus();
   };
 
 
@@ -50,6 +72,10 @@ class TodoInput extends React.Component {
             autoFocus
             onChange={ this.handleInputChange }
             value={ this.state.todoText }
+
+            // tell React that we want to associate the <input> ref
+            // with the `textInput` that we created before
+            ref={ this.textInput }
           />
         </form>
 
