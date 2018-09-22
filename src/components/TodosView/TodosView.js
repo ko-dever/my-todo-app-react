@@ -7,7 +7,7 @@ import TodoInput from '../TodoInput';
 import TodosFilter, { TODOS_FILTERS } from '../TodosFilter';
 import TodosList from '../TodosList';
 
-// import { FAKE_ITEMS } from '../sample-data';
+// import { FAKE_ITEMS } from '../../sample-data';
 import { ContextItemsArchive } from '../../contexts/TodoItemsContext';
 
 
@@ -21,12 +21,9 @@ class TodosView extends React.Component {
 
       allTodos: [],
       // allTodos: FAKE_ITEMS,
-
-      // items currently displayed (synced with the active filter)
-      currentTodos: [],
     };
 
-    /* // NOTE: avoid calling `setState()` inside the constructor
+    /* // NOTE: do not call `setState()` inside the constructor
      *
      * We could have call `getTodosToDisplay()` <-- without argument
      * inside `componentDidMount()` but this would have trigger a new render
@@ -40,7 +37,7 @@ class TodosView extends React.Component {
      *
      * See : http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
      */
-    this.state.currentTodos = this.getTodosToDisplay( true );
+    this.currentTodos = this.getTodosToDisplay();
   }
 
 
@@ -57,26 +54,22 @@ class TodosView extends React.Component {
   /** Add a new todo */
   handleAddTodo = ( newTodoText ) => {
 
-    // get all existing todos
-    const existingTodos = this.state.allTodos;
-
-
-    // build an "Todo object"
     const newTodo = {
       id  : 'todo#' + (+ new Date()), // generate a timestamp
       text: newTodoText,
     };
 
+    // clear items currently displayed
+    this.currentTodos = null;
 
-    // update private state by merging existing todos with the new one
-    // and refresh view to display correct todos
-    this.setState({
-      allTodos: [
-        ...existingTodos,
-        newTodo,
-      ],
-
-    }, this.getTodosToDisplay );
+    // Recommended : using the updater function
+    //   https://reactjs.org/docs/faq-state.html#how-do-i-update-state-with-values-that-depend-on-the-current-state
+    //   https://reactjs.org/docs/faq-state.html#what-is-the-difference-between-passing-an-object-or-a-function-in-setstate
+    // this will trigger a new render, and so it will get the new todos to display
+    this.setState( currentState => ({
+      // merge the new item with the existing ones
+      allTodos: [ ...currentState.allTodos, newTodo ]
+    }));
   };
 
 
@@ -87,9 +80,9 @@ class TodosView extends React.Component {
 
 
   /** Mark a todo as completed */
-  handleFinishTodo = ( todoId ) => {
-    this.manageTodos( 'finish', todoId );
-  };
+  // handleFinishTodo = ( todoId ) => {
+  //   this.manageTodos( 'finish', todoId );
+  // };
 
 
   /** Handle the selection of a new filter */
@@ -100,16 +93,25 @@ class TodosView extends React.Component {
 
     console.log( 'handleFilterChange() Will update filter to [ %s ]', newFilter );
 
+    // clear items currently displayed
+    this.currentTodos = null;
+
     // update private state
-    // and refresh view to display correct todos
-    this.setState(
-      { todosFilter: newFilter },
-      this.getTodosToDisplay
-    );
+    // this will trigger a new render, and so it will get the new todos to display
+    this.setState({ todosFilter: newFilter });
+
+    // here the new filter will trigger new todos to be displayed
+    // also we want the input to keep the focus
   };
 
 
-  getTodosToDisplay = ( returnTodos ) => {
+  getTodosToDisplay = () => {
+
+    if ( this.currentTodos ) {
+      console.log( 'getTodosToDisplay(), Return items already stored' );
+      return this.currentTodos;
+    }
+
     const { todosFilter, allTodos } = this.state;
     let todoToDisplay = [];
 
@@ -136,11 +138,8 @@ class TodosView extends React.Component {
       });
     }
 
-    if ( returnTodos === true ) {
-      return todoToDisplay;
-    }
-
-    this.setState({ currentTodos: todoToDisplay });
+    // update and return new items to display
+    return this.currentTodos = todoToDisplay;
   };
 
 
@@ -183,33 +182,36 @@ class TodosView extends React.Component {
     });
 
 
+    // clear items currently displayed
+    this.currentTodos = null;
+
     // update private state with the new todos
-    // and refresh view to display correct todos
-    this.setState(
-      { allTodos: newTodos },
-      this.getTodosToDisplay
-    );
+    this.setState({ allTodos: newTodos });
   };
 
 
-  render = () => (
-    <div className="TodosView">
+  render() {
+    console.log( '------------------------------------' );
+    console.log( 'TodosView render()' );
+    return (
+      <div className="TodosView">
 
-      <TodosHeader nbTodos={ this.state.currentTodos.length } />
+        <TodosHeader nbTodos={ this.getTodosToDisplay().length } />
 
-      <TodoInput fnAddTodo={ this.handleAddTodo } />
+        <TodoInput fnAddTodo={ this.handleAddTodo } />
 
-      <TodosFilter
-        activeFilter={ this.state.todosFilter }
-        fnFilterChange={ this.handleFilterChange }
-      />
+        <TodosFilter
+          activeFilter={ this.state.todosFilter }
+          fnFilterChange={ this.handleFilterChange }
+        />
 
-      <ContextItemsArchive.Provider value={ this.handleArchiveTodo }>
-        <TodosList todos={ this.state.currentTodos } />
-      </ContextItemsArchive.Provider>
+        <ContextItemsArchive.Provider value={ this.handleArchiveTodo }>
+          <TodosList todos={ this.getTodosToDisplay() } />
+        </ContextItemsArchive.Provider>
 
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default TodosView;

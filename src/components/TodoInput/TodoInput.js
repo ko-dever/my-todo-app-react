@@ -37,22 +37,25 @@ class TodoInput extends React.Component {
   };
 
 
-  render = () => (
-    <div className="TodoInput">
+  render() {
+    console.log( 'TodoInput render()' );
+    return (
+      <div className="TodoInput">
 
-      <form onSubmit={ this.handleFormSubmit }>
-        <input
-          type="text"
-          className="TodoInput-input"
-          placeholder="Enregistrer une nouvelle tâche"
-          autoFocus
-          onChange={ this.handleInputChange }
-          value={ this.state.todoText }
-        />
-      </form>
+        <form onSubmit={ this.handleFormSubmit }>
+          <input
+            type="text"
+            className="TodoInput-input"
+            placeholder="Enregistrer une nouvelle tâche"
+            autoFocus
+            onChange={ this.handleInputChange }
+            value={ this.state.todoText }
+          />
+        </form>
 
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default TodoInput;
