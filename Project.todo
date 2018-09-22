@@ -1,4 +1,3 @@
-
 React Test ToDo App:
 ☐ Try to make a composition for list items (different types active/completed/archived)
   An "active item" is almost the same as a "completed item" and "archived item", except for their style.

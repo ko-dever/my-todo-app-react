@@ -25,15 +25,9 @@ class TodosView extends React.Component {
 
     /* // NOTE: do not call `setState()` inside the constructor
      *
-     * We could have call `getTodosToDisplay()` <-- without argument
-     * inside `componentDidMount()` but this would have trigger a new render
-     * because state is mutated. (whereas the component is already mounted and rendered)
-     *
-     * As the `constructor` is triggered before anything else (and `componentDidMount()`)
-     * we use this opportunity to set the correct value for the items to display.
-     *
-     * But before calling `getTodosToDisplay()`, we need to set some initial values for the state.
-     * That's why we call it later, and not directly when we initialize `state`.
+     * We could have call `getTodosToDisplay()` inside `componentDidMount()`
+     * but as the `constructor` is triggered before anything else we use this
+     * opportunity to set the correct value.
      *
      * See : http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
      */
@@ -121,20 +115,20 @@ class TodosView extends React.Component {
     // only show completed items, but not archived
     if ( todosFilter === TODOS_FILTERS.completed.key ) {
       todoToDisplay = allTodos.filter( todo => {
-        return todo.completed === true && !todo.archived;
+        return todo.isCompleted === true && !todo.isArchived;
       });
     }
 
     // show archived items, no matter their status
     else if ( todosFilter === TODOS_FILTERS.archived.key ) {
       todoToDisplay = allTodos.filter( todo => {
-        return todo.archived === true;
+        return todo.isArchived === true;
       });
     }
 
     else { // default to active items
       todoToDisplay = allTodos.filter( todo => {
-        return !todo.completed && !todo.archived;
+        return !todo.isCompleted && !todo.isArchived;
       });
     }
 
@@ -162,9 +156,9 @@ class TodosView extends React.Component {
     let mark = '';
 
     if ( action === 'finish' ) {
-      mark = 'completed';
+      mark = 'isCompleted';
     } else if ( action === 'archive' ) {
-      mark = 'archived';
+      mark = 'isArchived';
     } else {
       console.error( 'manageTodos() The action [ %s ] is not recognized', action );
       return;
