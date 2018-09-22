@@ -14,3 +14,4 @@ React Test ToDo App:
   ☐ Keep focus on the input when filter changes
   ✔ Isolate each component in their own folder with an entry point `index.js` @done(18-09-21 20:33)
   ✔ Implements Context to avoid "props drilling" through many components @done(18-09-21 20:05)
+  ☐ Sort archived items by the date when they were archived
