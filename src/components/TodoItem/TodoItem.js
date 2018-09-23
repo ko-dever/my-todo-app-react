@@ -11,7 +11,8 @@ const TodoItem = ( { todo } ) => (
     <span>{ todo.text }</span>
 
     <ContextTodoItems.Consumer>
-      { ({ complete, archive }) => (
+      { ({ complete, archive, remove }) => (
+        // `delete` is already a reserved keyword
 
         // Fragments : return multiple items without encapsulating
         // them inside a useless extra node like a <div>
@@ -24,6 +25,12 @@ const TodoItem = ( { todo } ) => (
           <button onClick={ () => { archive( todo.id ) } }>
             { todo.isArchived ? 'Unarchive' : 'Archive' }
           </button>
+
+          { ! todo.isArchived ? ''
+            : <button onClick={ () => { remove( todo.id ) } }>
+                Delete
+              </button>
+          }
         </React.Fragment>
       )}
     </ContextTodoItems.Consumer>

@@ -102,6 +102,12 @@ class TodosView extends React.Component {
   };
 
 
+  /** Delete completely a todo */
+  handleDeleteTodo = ( todoId ) => {
+    this.manageTodos( 'delete', todoId );
+  };
+
+
   /** Mark a todo as completed */
   handleFinishTodo = ( todoId ) => {
     this.manageTodos( 'finish', todoId );
@@ -183,35 +189,45 @@ class TodosView extends React.Component {
     action = action.toLowerCase();
 
 
-    let mark = '';
+    const actionsAllowed = [ 'finish', 'archive', 'delete' ];
 
-    if ( action === 'finish' ) {
-      mark = 'isCompleted';
-    } else if ( action === 'archive' ) {
-      mark = 'isArchived';
-    } else {
+    // prevent unknown actions
+    if ( actionsAllowed.includes( action ) === false ) {
       console.error( 'manageTodos() The action [ %s ] is not recognized', action );
       return;
     }
 
 
-    // find the correct item and mark it
-    const newTodos = this.state.allTodos.map( todo => {
+    let newTodos = this.state.allTodos;
 
-      if ( todo.id === todoId ) {
-        console.info( 'manageTodos() Will [ %s ] item [ %s ].', action, todo.id );
 
-        // if the item is already marked, remove it
-        // otherwise apply it.
-        if ( todo[ mark ] ) {
-          delete todo[ mark ];
-        } else {
-          todo[ mark ] = true;
+    if ( action !== 'delete' ) {
+
+      const mark = action === 'finish' ? 'isCompleted' : 'isArchived';
+
+      // find the correct item and mark it
+      newTodos = newTodos.map( todo => {
+
+        if ( todo.id === todoId ) {
+          console.info( 'manageTodos() Will [ %s ] item [ %s ].', action, todo.id );
+
+          // if the item is already marked, remove the mark
+          // otherwise apply it
+          if ( todo[ mark ] ) {
+            delete todo[ mark ];
+          } else {
+            todo[ mark ] = true;
+          }
         }
-      }
 
-      return todo;
-    });
+        return todo;
+      });
+    }
+
+    else { // action === 'delete'
+      // get todos with an ID different than the one passed in the function
+      newTodos = newTodos.filter( todo => todo.id !== todoId );
+    }
 
 
     // clear items currently displayed
@@ -238,6 +254,7 @@ class TodosView extends React.Component {
         />
 
         <ContextTodoItems.Provider value={{
+          remove  : this.handleDeleteTodo,
           archive : this.handleArchiveTodo,
           complete: this.handleFinishTodo,
         }}>
