@@ -15,6 +15,9 @@ React Test ToDo App:
     }
   ☐ Add routes (react-router) to mimic the filters
     The URL should reflect the list currently displayed http://.../actives, http://.../completed, ...
+  ☐ Improve comments and documentation of functions (JSDoc /** */)
+    https://github.com/Microsoft/TypeScript/wiki/JsDoc-support-in-JavaScript
+  ☐ Improve the integration of TypeScript (at least for the code checking)
 
 Archive:
   ✔ Implement a button to completely delete an item @done(18-09-23 18:37) @project(React Test ToDo App)
