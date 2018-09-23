@@ -1,5 +1,3 @@
-// @ts-check
-
 import React from 'react';
 
 import { ContextTodoItems } from '../../contexts/ContextTodoItems';;

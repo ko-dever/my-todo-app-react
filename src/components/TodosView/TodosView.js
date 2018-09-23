@@ -1,5 +1,3 @@
-// @ts-check
-
 import React from 'react';
 
 import TodosHeader from '../TodosHeader';

@@ -1,5 +1,3 @@
-// @ts-check
-
 import React from 'react';
 
 import TodosView from '../TodosView';
