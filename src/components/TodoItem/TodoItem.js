@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { ContextItemsArchive } from '../../contexts/TodoItemsContext';;
+import { ContextTodoItems } from '../../contexts/ContextTodoItems';;
 
 
 const TodoItem = ( { todo } ) => (
@@ -10,15 +10,23 @@ const TodoItem = ( { todo } ) => (
 
     <span>{ todo.text }</span>
 
-    {/* TODO: implement other buttons/functions (delete, unarchive, finish) */}
+    <ContextTodoItems.Consumer>
+      { ({ complete, archive }) => (
 
-    <ContextItemsArchive.Consumer>
-      { (fnArchiveTodo) => (
-        <button onClick={ () => { fnArchiveTodo( todo.id ) } }>
-          Archive
-        </button>
+        // Fragments : return multiple items without encapsulating
+        // them inside a useless extra node like a <div>
+        // See : https://reactjs.org/docs/fragments.html
+        <React.Fragment>
+          <button onClick={ () => { complete( todo.id ) } }>
+            Finish
+          </button>
+
+          <button onClick={ () => { archive( todo.id ) } }>
+            Archive
+          </button>
+        </React.Fragment>
       )}
-    </ContextItemsArchive.Consumer>
+    </ContextTodoItems.Consumer>
 
   </li>
 );

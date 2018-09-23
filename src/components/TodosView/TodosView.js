@@ -7,8 +7,8 @@ import TodoInput from '../TodoInput';
 import TodosFilter, { TODOS_FILTERS } from '../TodosFilter';
 import TodosList from '../TodosList';
 
-// import { FAKE_ITEMS } from '../../sample-data';
-import { ContextItemsArchive } from '../../contexts/TodoItemsContext';
+import { SAMPLE_TODOS } from '../../sample-data';
+import { ContextTodoItems } from '../../contexts/ContextTodoItems';
 
 
 class TodosView extends React.Component {
@@ -19,8 +19,7 @@ class TodosView extends React.Component {
     this.state = {
       todosFilter: this.getInitialView(),
 
-      allTodos: [],
-      // allTodos: FAKE_ITEMS,
+      allTodos: SAMPLE_TODOS,
     };
 
     /* // NOTE: do not call `setState()` inside the constructor
@@ -97,9 +96,9 @@ class TodosView extends React.Component {
 
 
   /** Mark a todo as completed */
-  // handleFinishTodo = ( todoId ) => {
-  //   this.manageTodos( 'finish', todoId );
-  // };
+  handleFinishTodo = ( todoId ) => {
+    this.manageTodos( 'finish', todoId );
+  };
 
 
   /** Handle the selection of a new filter */
@@ -122,6 +121,7 @@ class TodosView extends React.Component {
   };
 
 
+  /** Get items to display, according to current filter */
   getTodosToDisplay = () => {
 
     if ( this.currentTodos ) {
@@ -138,7 +138,7 @@ class TodosView extends React.Component {
     // only show completed items, but not archived
     if ( todosFilter === TODOS_FILTERS.completed.key ) {
       todoToDisplay = allTodos.filter( todo => {
-        return todo.isCompleted === true && !todo.isArchived;
+        return todo.isCompleted === true;
       });
     }
 
@@ -160,7 +160,7 @@ class TodosView extends React.Component {
   };
 
 
-  /** Perform actions on Todos */
+  /** Perform various actions on one todo */
   manageTodos = ( action, todoId ) => {
     if ( !action ) {
       console.error( 'manageTodos() An action is needed.' );
@@ -192,6 +192,7 @@ class TodosView extends React.Component {
     const newTodos = this.state.allTodos.map( todo => {
 
       if ( todo.id === todoId ) {
+        console.info( 'manageTodos() Will [ %s ] item [ %s ].', action, todo.id );
         todo[ mark ] = true;
       }
 
@@ -222,9 +223,14 @@ class TodosView extends React.Component {
           fnFilterChange={ this.handleFilterChange }
         />
 
-        <ContextItemsArchive.Provider value={ this.handleArchiveTodo }>
+        <ContextTodoItems.Provider value={{
+          archive : this.handleArchiveTodo,
+          complete: this.handleFinishTodo,
+        }}>
+
           <TodosList todos={ this.getTodosToDisplay() } />
-        </ContextItemsArchive.Provider>
+
+        </ContextTodoItems.Provider>
 
       </div>
     );
