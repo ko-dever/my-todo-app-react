@@ -14,8 +14,14 @@ React Test ToDo App:
       filter: 'archived',
       todos : { archived: [ ...], completed: [...], active: [...] }
     }
+  ☐ Add routes (react-router) to mimic the filters
+    The URL should reflect the list currently displayed http://.../actives, http://.../completed, ...
 
 Archive:
+  ✔ Implement opposite actions for each buttons to revert the state of an item @done(18-09-23 18:00) @project(React Test ToDo App)
+    Item active : show all buttons
+    Item completed : show all buttons but the button "Finish" becomes "Not finish"
+    Item archived : show all buttons but the button "Archive" becomes "Unarchive"
   ✔ Implement `TodosView.shouldComponentUpdate()` when filter changes ? @done(18-09-22 20:25) @project(React Test ToDo App)
     When we add a todo => it is added to the list of "active items".
     But if it is done when we are on a diffent list (than "active items"),

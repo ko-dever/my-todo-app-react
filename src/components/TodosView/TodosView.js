@@ -35,26 +35,33 @@ class TodosView extends React.Component {
 
 
   /**
+   * // TODO : rework this function
+   *
+   * Render should only be blocked if we add a todo and we are on a filter
+   * different than "active items" => we don't need to trigger a new render
+   * as the new todo is only for the list (filter) 'active'
+   *
+   * ----------
    * Evaluate if the component needs to be re-rendered
    * @see https://reactjs.org/docs/react-component.html#shouldcomponentupdate
    */
-  shouldComponentUpdate = ( nextProps, nextState ) => {
-    // if current filter is 'active', allow render
-    // we need to update the view if the user adds a todo
-    if ( this.state.todosFilter === TODOS_FILTERS.active.key ) {
-      return true;
-    }
+  // shouldComponentUpdate = ( nextProps, nextState ) => {
+  //   // if current filter is 'active', allow render
+  //   // we need to update the view if the user adds a todo
+  //   if ( this.state.todosFilter === TODOS_FILTERS.active.key ) {
+  //     return true;
+  //   }
 
-    // If after an update of the component the filter is still the same, block the render.
-    // Example, we are on the list/filter 'archived' and we add a todo
-    // => we don't need to trigger a new render as the new todo is for the list/filter 'active'
-    if ( nextState.todosFilter === this.state.todosFilter ) {
-      console.info( 'TodosView.shouldComponentUpdate() Filter is still the same, block render' );
-      return false;
-    }
+  //   // If after an update of the component the filter is still the same, block the render.
+  //   // Example, we are on the list/filter 'archived' and we add a todo
+  //   // => we don't need to trigger a new render as the new todo is for the list/filter 'active'
+  //   if ( nextState.todosFilter === this.state.todosFilter ) {
+  //     console.info( 'TodosView.shouldComponentUpdate() Filter is still the same, block render' );
+  //     return false;
+  //   }
 
-    return true;
-  };
+  //   return true;
+  // };
 
 
   /** Guess what initial view to render */
@@ -193,7 +200,14 @@ class TodosView extends React.Component {
 
       if ( todo.id === todoId ) {
         console.info( 'manageTodos() Will [ %s ] item [ %s ].', action, todo.id );
-        todo[ mark ] = true;
+
+        // if the item is already marked, remove it
+        // otherwise apply it.
+        if ( todo[ mark ] ) {
+          delete todo[ mark ];
+        } else {
+          todo[ mark ] = true;
+        }
       }
 
       return todo;

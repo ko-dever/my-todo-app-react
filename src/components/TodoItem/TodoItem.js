@@ -18,11 +18,11 @@ const TodoItem = ( { todo } ) => (
         // See : https://reactjs.org/docs/fragments.html
         <React.Fragment>
           <button onClick={ () => { complete( todo.id ) } }>
-            Finish
+            { todo.isCompleted ? 'Not finish' : 'Finish' }
           </button>
 
           <button onClick={ () => { archive( todo.id ) } }>
-            Archive
+            { todo.isArchived ? 'Unarchive' : 'Archive' }
           </button>
         </React.Fragment>
       )}
