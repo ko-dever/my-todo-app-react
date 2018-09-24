@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { StyledFilter, StyledButton } from './StyledComponents';
+
 
 const TODOS_FILTERS = Object.freeze({
   active   : { key: 'active',    title: 'Active',    },
@@ -9,11 +11,11 @@ const TODOS_FILTERS = Object.freeze({
 
 
 const TodosFilter = ( props ) => (
-  <div className="TodosFilter">
+  <StyledFilter>
 
     { generateButtons( props.activeFilter, props.fnFilterChange ) }
 
-  </div>
+  </StyledFilter>
 );
 
 
@@ -28,13 +30,13 @@ const generateButtons = function generateButtons( activeFilter, fnFilterChange )
     const activeClass = filter.key === activeFilter ? 'filter-active' : '';
 
     return (
-      <span
+      <StyledButton
         key={ filter.key }
-        className={ `TodosFilter-button ${activeClass}` }
+        className={ activeClass }
         onClick={ () => { fnFilterChange( filter.key ) } }
       >
         { filter.title }
-      </span>
+      </StyledButton>
     );
   });
 };
