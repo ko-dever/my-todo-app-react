@@ -1,4 +1,1 @@
-import './TodosList.css';
-import TodosList from './TodosList';
-
-export default TodosList;
+export { default } from './TodosList';

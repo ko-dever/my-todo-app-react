@@ -1,14 +1,20 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import TodoItem from '../TodoItem';
 
 
+const StyledList = styled.div`
+  margin-top: 20px;
+`;
+
+
 const TodosList = ( { todos } ) => (
-  <div className="TodosList">
+  <StyledList>
 
     { generateTodos( todos ) }
 
-  </div>
+  </StyledList>
 );
 
 
