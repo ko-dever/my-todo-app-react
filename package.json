@@ -11,7 +11,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "prebuild": "rm -rf ./build/",
-    "postbuild": "echo doomed-world.surge.sh > build/CNAME && surge -p ./build/",
+    "postbuild": "echo ko-dever.surge.sh > build/CNAME && surge -p ./build/",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

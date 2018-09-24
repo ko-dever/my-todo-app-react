@@ -1,4 +1,8 @@
 {
+  // Some help :
+  // https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html
+  // https://code.visualstudio.com/docs/languages/javascript
+
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
