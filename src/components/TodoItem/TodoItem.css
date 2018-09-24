@@ -1,8 +1,0 @@
-.TodoItem {
-    margin-bottom: 10px;
-}
-
-.TodoItem span:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}

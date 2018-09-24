@@ -1,10 +1,21 @@
 import React from 'react';
+import styled from 'styled-components';
 
-import { ContextTodoItems } from '../../contexts/ContextTodoItems';;
+import { ContextTodoItems } from '../../contexts/ContextTodoItems';
 
 
-const TodoItem = ( { todo } ) => (
-  <li className="TodoItem">
+const StyledItem = styled.li`
+  margin-bottom: 10px;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
+
+
+export default ( { todo } ) => (
+  <StyledItem>
 
     <span>{ todo.text }</span>
 
@@ -24,6 +35,8 @@ const TodoItem = ( { todo } ) => (
             { todo.isArchived ? 'Unarchive' : 'Archive' }
           </button>
 
+          {/* 'Delete' button only displayed for archived items */}
+          {/* TODO : an item should be removable at any time */}
           { ! todo.isArchived ? ''
             : <button onClick={ () => { remove( todo.id ) } }>
                 Delete
@@ -33,8 +46,5 @@ const TodoItem = ( { todo } ) => (
       )}
     </ContextTodoItems.Consumer>
 
-  </li>
+  </StyledItem>
 );
-
-
-export default TodoItem;
