@@ -1,12 +1,20 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import TodosView from '../TodosView';
 
 
-const App = () => (
-  <div className="App">
-    <TodosView />
-  </div>
-);
+const StyledApp = styled.div`
+  padding: 10px 0;
+`;
 
-export default App;
+
+export default () => (
+
+  <StyledApp>
+
+    <TodosView />
+
+  </StyledApp>
+
+);
