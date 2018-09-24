@@ -1,13 +1,17 @@
 import React from 'react';
+import styled from 'styled-components';
 
 
-const TodosHeader = ({ nbTodos }) => (
-  <header className="TodosHeader">
+const StyledHeader = styled.header`
+  padding-top: 20px;
+  text-align : center;
+`;
+
+
+export default ( { nbTodos }) => (
+  <StyledHeader>
 
     <strong>My first TODO app</strong> (#{ nbTodos })
 
-  </header>
+  </StyledHeader>
 );
-
-
-export default TodosHeader;
