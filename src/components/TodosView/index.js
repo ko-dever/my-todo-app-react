@@ -1,4 +1,1 @@
-import './TodosView.css';
-import TodosView from './TodosView';
-
-export default TodosView;
+export { default } from './TodosView';

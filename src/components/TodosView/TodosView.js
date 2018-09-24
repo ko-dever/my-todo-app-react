@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import TodosHeader from '../TodosHeader';
 import TodoInput from '../TodoInput';
@@ -7,6 +8,13 @@ import TodosList from '../TodosList';
 
 import { SAMPLE_TODOS } from '../../sample-data';
 import { ContextTodoItems } from '../../contexts/ContextTodoItems';
+
+
+const StyledView = styled.div`
+  width : 500px;
+  margin: auto;
+  background-color: rgb(203, 203, 203);
+`;
 
 
 class TodosView extends React.Component {
@@ -240,7 +248,7 @@ class TodosView extends React.Component {
     console.log( '------------------------------------' );
     console.log( 'TodosView render()' );
     return (
-      <div className="TodosView">
+      <StyledView>
 
         <TodosHeader nbTodos={ this.getTodosToDisplay().length } />
 
@@ -261,7 +269,7 @@ class TodosView extends React.Component {
 
         </ContextTodoItems.Provider>
 
-      </div>
+      </StyledView>
     );
   }
 }
