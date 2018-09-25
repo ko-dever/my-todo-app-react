@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import TodoItem from '../TodoItem';
@@ -31,6 +32,18 @@ const generateTodos = function generateTodos( todos ) {
   ));
 
   return <ul>{ markup }</ul>;
+};
+
+
+// Component's default props
+TodosList.defaultProps = {
+  todos: [],
+};
+
+
+// Component props typechecking
+TodosList.propTypes = {
+  todos: PropTypes.arrayOf( PropTypes.object ),
 };
 
 
