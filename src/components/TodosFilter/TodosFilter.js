@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { StyledFilter, StyledButton } from './StyledComponents';
 
@@ -39,6 +40,22 @@ const generateButtons = function generateButtons( activeFilter, fnFilterChange )
       </StyledButton>
     );
   });
+};
+
+
+// Component's default props
+TodosFilter.defaultProps = {
+  activeFilter  : TODOS_FILTERS.active.key,
+  fnFilterChange() {
+    console.warn( 'TodosFilter.props.fnFilterChange() does not exist.' );
+  },
+};
+
+
+// Component props typechecking
+TodosFilter.propTypes = {
+  activeFilter  : PropTypes.string.isRequired,
+  fnFilterChange: PropTypes.func.isRequired,
 };
 
 
