@@ -3,7 +3,6 @@ React Test ToDo App:
     An "active item" is almost the same as a "completed item" and "archived item", except for their style.
     See : https://reactjs.org/docs/composition-vs-inheritance.html
   ☐ Implements dynamic import when possible
-  ☐ Implement defaultPropTypes and propTypes
   ☐ Try to include remote data fetching using https://www.mockapi.io/docs for example
   ☐ Sort archived items by the date when they were archived
   ☐ Organize items into different Arrays (in state?), with a key (the filter?) pointing to displayed items ?
@@ -21,6 +20,7 @@ React Test ToDo App:
   ☐ Implement tests (Jest?)
 
 Archive:
+  ✔ Implement defaultPropTypes and propTypes @done(18-09-25 14:30) @project(React Test ToDo App)
   ✔ Use Styled Components instead of having classes non reused @done(18-09-24 20:24) @project(React Test ToDo App)
     See : http://styled-components.com/
   ✔ Implement a button to completely delete an item @done(18-09-23 18:37) @project(React Test ToDo App)
