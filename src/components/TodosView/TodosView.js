@@ -24,7 +24,7 @@ class TodosView extends React.Component {
     super( props );
 
     this.state = {
-      todosFilter: this.getInitialView(),
+      todosFilter: this.getInitialFilter(),
 
       allTodos: SAMPLE_TODOS,
     };
@@ -71,13 +71,25 @@ class TodosView extends React.Component {
   // };
 
 
-  /** Guess what initial view to render */
-  getInitialView() {
-    const { initialView } = this.props;
+  /** Find which initial filter to use */
+  getInitialFilter() {
+    const { initialFilter } = this.props;
+    const filterAsked       = TODOS_FILTERS[ initialFilter ];
+    const defaultFilter     = TODOS_FILTERS.active;
 
-    return ! TODOS_FILTERS[ initialView ]
-      ? TODOS_FILTERS.active.key
-      : initialView;
+    if ( ! filterAsked ) {
+      console.info(
+        'TodosView.getInitialFilter()',
+        '\n ↳ This filter [ %s ] does not exist.',
+        '\n ↳ Fallback to filter [ %s ].',
+        filterAsked,
+        defaultFilter,
+      );
+
+      return defaultFilter.key;
+    }
+
+    return filterAsked.key;
   };
 
 
@@ -278,13 +290,13 @@ class TodosView extends React.Component {
 
 // Component's default props
 TodosView.defaultProps = {
-  initialView: TODOS_FILTERS.active.key,
+  initialFilter: TODOS_FILTERS.active.key,
 };
 
 
 // Component props typechecking
 TodosView.propTypes = {
-  initialView: PropTypes.string,
+  initialFilter: PropTypes.string,
 };
 
 
