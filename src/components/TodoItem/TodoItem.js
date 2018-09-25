@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { ContextTodoItems } from '../../contexts/ContextTodoItems';
@@ -14,7 +15,7 @@ const StyledItem = styled.li`
 `;
 
 
-export default ( { todo } ) => (
+const TodoItem = ( { todo } ) => (
   <StyledItem>
 
     <span>{ todo.text }</span>
@@ -48,3 +49,29 @@ export default ( { todo } ) => (
 
   </StyledItem>
 );
+
+
+// Component's default props
+TodoItem.defaultProps = {
+  todo: {
+    id  : 'todo#_' + (+new Date()),
+    text: 'TODO_DEFAULT_TEXT',
+  },
+};
+
+
+// Component props typechecking
+TodoItem.propTypes = {
+  // This component is used in a loop, and thus it requires a `key` prop.
+  // But this `key`, proper to React internal's mechanisms, must not be checked here
+
+  todo: PropTypes.shape({
+    id         : PropTypes.string.isRequired,
+    text       : PropTypes.string.isRequired,
+    isArchived : PropTypes.bool,
+    isCompleted: PropTypes.bool,
+  }),
+};
+
+
+export default TodoItem;
