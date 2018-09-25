@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { StyledWrapper, StyledInput } from './StyledComponents';
 
@@ -51,7 +52,7 @@ class TodoInput extends React.Component {
 
     // execute the function passed in the props
     // by the component which controls this one
-    this.props.fnAddTodo( todoToAdd )
+    this.props.fnAddTodo( todoToAdd );
 
     // update private state
     // once we passed the text of the todo, we can clear the input
@@ -93,5 +94,20 @@ class TodoInput extends React.Component {
     );
   }
 }
+
+
+// Component's default props
+TodoInput.defaultProps = {
+  fnAddTodo() {
+    console.warn( 'TodoInput.props.fnAddTodo() does not exist.' );
+  },
+};
+
+
+// Component props typechecking
+TodoInput.propTypes = {
+  fnAddTodo: PropTypes.func.isRequired,
+};
+
 
 export default TodoInput;
