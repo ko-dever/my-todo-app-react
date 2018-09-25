@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import TodosHeader from '../TodosHeader';
@@ -273,5 +274,18 @@ class TodosView extends React.Component {
     );
   }
 }
+
+
+// Component's default props
+TodosView.defaultProps = {
+  initialView: TODOS_FILTERS.active.key,
+};
+
+
+// Component props typechecking
+TodosView.propTypes = {
+  initialView: PropTypes.string,
+};
+
 
 export default TodosView;
