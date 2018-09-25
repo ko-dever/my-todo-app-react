@@ -18,6 +18,7 @@ React Test ToDo App:
   ☐ Improve the integration of TypeScript (at least for the code checking)
   ☐ Try to implement somewhere a HOC
     Without adding too much complexity to the code
+  ☐ Implement tests (Jest?)
 
 Archive:
   ✔ Use Styled Components instead of having classes non reused @done(18-09-24 20:24) @project(React Test ToDo App)
