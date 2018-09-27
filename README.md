@@ -2,6 +2,20 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ---
 
-Nothing serious here.
+# What is this repository ?
 
-For testing purposes only.
+Nothing serious.
+
+Just a simple repository to play with [React](http://reactjs.org/), mostly for testing purposes, for trying and implementng some concepts specific to this library.
+
+
+# What concepts are covered in this project ?
+
+Currently :
+- [Class Components](https://reactjs.org/docs/state-and-lifecycle.html) and [Functional Components](https://reactjs.org/docs/components-and-props.html)
+- Components lifecycle methods
+- [React Refs](https://reactjs.org/docs/refs-and-the-dom.html)
+- [React Fragments](https://reactjs.org/docs/fragments.html)
+- [React Context](https://reactjs.org/docs/context.html)
+- [Typechecking with PropTypes](https://reactjs.org/docs/typechecking-with-proptypes.html)
+- [Styled-Components](http://styled-components.com/)

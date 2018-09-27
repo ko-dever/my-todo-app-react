@@ -28,10 +28,6 @@ Archive:
     Item active : show all buttons
     Item completed : show all buttons but the button "Finish" becomes "Not finish"
     Item archived : show all buttons but the button "Archive" becomes "Unarchive"
-  ✔ Implement `TodosView.shouldComponentUpdate()` when filter changes ? @done(18-09-22 20:25) @project(React Test ToDo App)
-    When we add a todo => it is added to the list of "active items".
-    But if it is done when we are on a diffent list (than "active items"),
-    we don't need to trigger a new render of the view as the added item won't be visible.
   ✔ Keep focus on the input when filter changes @done(18-09-22 18:57) @project(React Test ToDo App)
   ✔ Export TODOS_FILTERS from the filter component @done(18-09-20 17:44) @project(React Test ToDo App)
     Use filters key to populate the main view and to check buttons value when clicked
