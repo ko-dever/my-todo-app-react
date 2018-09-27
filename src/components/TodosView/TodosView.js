@@ -23,52 +23,21 @@ class TodosView extends React.Component {
   constructor( props ) {
     super( props );
 
+    // static value : we don't need to store it the state
+    // `currentTodos` will be based on it
+    this.allTodos = [];
+    // this.allTodos = SAMPLE_TODOS;
+
+    const initialFilter = this.getInitialFilter();
+
     this.state = {
-      todosFilter: this.getInitialFilter(),
+      todosFilter : initialFilter,
 
-      allTodos: SAMPLE_TODOS,
+      // we could have mutated `currentTodos` in `componentDidMount()`
+      // but why not do this as soon as we can ?
+      currentTodos: this.getTodosToDisplay( initialFilter ),
     };
-
-    /* // NOTE: do not call `setState()` inside the constructor
-     *
-     * We could have called `getTodosToDisplay()` inside `componentDidMount()`
-     * but as the `constructor` is triggered before anything else we use this
-     * opportunity to set the correct value.
-     *
-     * See : http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/
-     */
-    this.currentTodos = this.getTodosToDisplay();
   }
-
-
-  /**
-   * // TODO : rework this function
-   *
-   * Render should only be blocked if we add a todo and we are on a filter
-   * different than "active items" => we don't need to trigger a new render
-   * as the new todo is only for the list (filter) 'active'
-   *
-   * ----------
-   * Evaluate if the component needs to be re-rendered
-   * @see https://reactjs.org/docs/react-component.html#shouldcomponentupdate
-   */
-  // shouldComponentUpdate = ( nextProps, nextState ) => {
-  //   // if current filter is 'active', allow render
-  //   // we need to update the view if the user adds a todo
-  //   if ( this.state.todosFilter === TODOS_FILTERS.active.key ) {
-  //     return true;
-  //   }
-
-  //   // If after an update of the component the filter is still the same, block the render.
-  //   // Example, we are on the list/filter 'archived' and we add a todo
-  //   // => we don't need to trigger a new render as the new todo is for the list/filter 'active'
-  //   if ( nextState.todosFilter === this.state.todosFilter ) {
-  //     console.info( 'TodosView.shouldComponentUpdate() Filter is still the same, block render' );
-  //     return false;
-  //   }
-
-  //   return true;
-  // };
 
 
   /** Find which initial filter to use */
@@ -94,24 +63,22 @@ class TodosView extends React.Component {
 
 
   /** Add a new todo */
-  handleAddTodo = ( newTodoText ) => {
-
+  handleAddTodo = ( textNewTodo ) => {
     const newTodo = {
       id  : 'todo#' + (+ new Date()), // generate a timestamp
-      text: newTodoText,
+      text: textNewTodo,
     };
 
-    // clear items currently displayed
-    this.currentTodos = null;
+    // merge the new item with the existing ones
+    this.allTodos = [ ...this.allTodos, newTodo ];
 
-    // Recommended : using the updater function
-    //   https://reactjs.org/docs/faq-state.html#how-do-i-update-state-with-values-that-depend-on-the-current-state
-    //   https://reactjs.org/docs/faq-state.html#what-is-the-difference-between-passing-an-object-or-a-function-in-setstate
-    // this will trigger a new render, and so it will get the new todos to display
-    this.setState( currentState => ({
-      // merge the new item with the existing ones
-      allTodos: [ ...currentState.allTodos, newTodo ]
-    }));
+    // no need to trigger a render if we add a todo while
+    // we are not on the list (filter) of active items
+    if ( this.state.todosFilter === TODOS_FILTERS.active.key ) {
+      this.setState({
+        currentTodos: this.getTodosToDisplay()
+      });
+    }
   };
 
 
@@ -135,60 +102,48 @@ class TodosView extends React.Component {
 
   /** Handle the selection of a new filter */
   handleFilterChange = ( newFilter ) => {
-    if ( this.state.todosFilter === newFilter ) {
+    // block if we are still on the same filter
+    if ( newFilter === this.state.todosFilter ) {
       return;
     }
 
     console.log( 'handleFilterChange() Will update filter to [ %s ]', newFilter );
 
-    // clear items currently displayed
-    this.currentTodos = null;
+    const todos = this.getTodosToDisplay( newFilter );
 
-    // update private state
-    // this will trigger a new render, and so it will get the new todos to display
-    this.setState({ todosFilter: newFilter });
-
-    // here the new filter will trigger new todos to be displayed
-    // also we want the input to keep the focus
+    // this will trigger a new render with the new todos
+    this.setState({
+      todosFilter : newFilter,
+      currentTodos: todos,
+    });
   };
 
 
   /** Get items to display, according to current filter */
-  getTodosToDisplay = () => {
+  getTodosToDisplay = ( currentFilter = this.state.todosFilter ) => {
+    console.log( 'getTodosToDisplay() Called with filter [ %s ]', currentFilter );
 
-    if ( this.currentTodos ) {
-      console.log( 'getTodosToDisplay(), Return items already stored' );
-      return this.currentTodos;
-    }
+    const { allTodos } = this;
 
-    const { todosFilter, allTodos } = this.state;
-    let todoToDisplay = [];
-
-    console.log( 'getTodosToDisplay() Called with filter [ %s ]', todosFilter );
-
-
-    // only show completed items, but not archived
-    if ( todosFilter === TODOS_FILTERS.completed.key ) {
-      todoToDisplay = allTodos.filter( todo => {
+    // show completed items (can be archived too)
+    if ( currentFilter === TODOS_FILTERS.completed.key ) {
+      return allTodos.filter( todo => {
         return todo.isCompleted === true;
       });
     }
 
-    // show archived items, no matter their status
-    else if ( todosFilter === TODOS_FILTERS.archived.key ) {
-      todoToDisplay = allTodos.filter( todo => {
+    // show archived items (can be completed too)
+    else if ( currentFilter === TODOS_FILTERS.archived.key ) {
+      return allTodos.filter( todo => {
         return todo.isArchived === true;
       });
     }
 
-    else { // default to active items
-      todoToDisplay = allTodos.filter( todo => {
+    else { // default to active items (active !== completed && !== archived)
+      return allTodos.filter( todo => {
         return !todo.isCompleted && !todo.isArchived;
       });
     }
-
-    // update and return new items to display
-    return this.currentTodos = todoToDisplay;
   };
 
 
@@ -217,53 +172,47 @@ class TodosView extends React.Component {
     }
 
 
-    let newTodos = this.state.allTodos;
-
-
     if ( action !== 'delete' ) {
 
       const mark = action === 'finish' ? 'isCompleted' : 'isArchived';
 
       // find the correct item and mark it
-      newTodos = newTodos.map( todo => {
-
+      for (const todo of this.allTodos) {
         if ( todo.id === todoId ) {
-          console.info( 'manageTodos() Will [ %s ] item [ %s ].', action, todo.id );
+          console.info( 'manageTodos() Will mark item [ %s ] as [ %s ]', todo.id, mark );
 
-          // if the item is already marked, remove the mark
-          // otherwise apply it
           if ( todo[ mark ] ) {
             delete todo[ mark ];
           } else {
             todo[ mark ] = true;
           }
-        }
 
-        return todo;
-      });
+          break;
+        }
+      }
     }
 
     else { // action === 'delete'
-      // get todos with an ID different than the one passed in the function
-      newTodos = newTodos.filter( todo => todo.id !== todoId );
+      // get todos with where their ID is different than the one passed in the function
+      this.allTodos = this.allTodos.filter( todo => todo.id !== todoId );
     }
 
-
-    // clear items currently displayed
-    this.currentTodos = null;
-
-    // update private state with the new todos
-    this.setState({ allTodos: newTodos });
+    this.setState({
+      currentTodos: this.getTodosToDisplay()
+    });
   };
 
 
   render() {
     console.log( '------------------------------------' );
     console.log( 'TodosView render()' );
+
+    const { currentTodos } = this.state;
+
     return (
       <StyledView>
 
-        <TodosHeader nbTodos={ this.getTodosToDisplay().length } />
+        <TodosHeader nbTodos={ currentTodos.length } />
 
         <TodoInput fnAddTodo={ this.handleAddTodo } />
 
@@ -278,7 +227,7 @@ class TodosView extends React.Component {
           complete: this.handleFinishTodo,
         }}>
 
-          <TodosList todos={ this.getTodosToDisplay() } />
+          <TodosList todos={ currentTodos } />
 
         </ContextTodoItems.Provider>
 

@@ -15,16 +15,16 @@ class TodoInput extends React.Component {
   };
 
 
-  // create a ref to store the textInput DOM element
+  // Create a ref to store the textInput DOM element
   // See : https://reactjs.org/docs/refs-and-the-dom.html
-  // I keep this here (even if `= null`) just to
-  // remember the class has this static property
+  // __ I keep this here (even if `= null`) just to
+  // __ remember the class has this static property
   textInput = null; // = React.createRef(); // native use of `ref` for React
 
 
   /** React lifecycle method */
   componentDidUpdate = () => {
-    console.log( 'TodoInput did update' );
+    // console.log( 'TodoInput did update' );
     // each time the component is rendered, keep the focus
     // don't do this in componentDidMount() : the <input> has the autoFocus attribute
     this.focusTextInput();
@@ -33,7 +33,7 @@ class TodoInput extends React.Component {
 
   /** Focus the text input */
   focusTextInput = () => {
-    console.log( 'TodoInput.focusTextInput()' );
+    // console.log( 'TodoInput.focusTextInput()' );
     // Focus the text input using the raw DOM API
     // Note: we're accessing "current" to get the DOM node
     this.textInput.focus(); // `ref` use for styled-component
@@ -68,14 +68,14 @@ class TodoInput extends React.Component {
 
 
   render() {
-    console.log( 'TodoInput render()' );
+    // console.log( 'TodoInput render()' );
     return (
       <StyledWrapper>
 
         <form onSubmit={ this.handleFormSubmit }>
           <StyledInput
             type="text"
-            placeholder="Enregistrer une nouvelle tâche"
+            placeholder="Save a new task"
             autoFocus
             onChange={ this.handleInputChange }
             value={ this.state.todoText }
@@ -85,7 +85,7 @@ class TodoInput extends React.Component {
             //
             // styled-components (v3 and lower) uses of the prop `innerRef`
             // See : https://www.styled-components.com/docs/advanced#refs
-            // TODO : update `innerRef` prop when styled-components gets upgraded to v4
+            // TODO : update `innerRef` prop to `ref` when styled-components gets upgraded to v4
             innerRef={ ( elem ) => { this.textInput = elem } }
           />
         </form>
