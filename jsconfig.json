@@ -1,11 +1,11 @@
 {
   // Some help :
-  // https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html
+  // https://code.visualstudio.com/docs/languages/jsconfig
   // https://code.visualstudio.com/docs/languages/javascript
+  // https://www.typescriptlang.org/docs/handbook/migrating-from-javascript.html
 
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "allowJs": true,
     "checkJs": true,
     "jsx": "react",
   },
