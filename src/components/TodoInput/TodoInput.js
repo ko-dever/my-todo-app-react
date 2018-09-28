@@ -4,16 +4,11 @@ import PropTypes from 'prop-types';
 import { StyledWrapper, StyledInput } from './StyledComponents';
 
 
-// we could have used `PureComponent` instead of `Component` to take advantage
+// we could have used `React.PureComponent` instead of `React.Component` to take advantage
 // of the (native) implementation of `shouldComponentUpdate()` for a shallow
 // comparison for props and state and avoid unnecessary re-renders,
-// but this whould have prevented the execute of `componentDidUpdate()`
+// but this whould have prevented the execution of `componentDidUpdate()`
 class TodoInput extends React.Component {
-
-  state = {
-    todoText: '', // current value of the <input>
-  };
-
 
   // Create a ref to store the textInput DOM element
   // See : https://reactjs.org/docs/refs-and-the-dom.html
@@ -26,7 +21,7 @@ class TodoInput extends React.Component {
   componentDidUpdate = () => {
     // console.log( 'TodoInput did update' );
     // each time the component is rendered, keep the focus
-    // don't do this in componentDidMount() : the <input> has the autoFocus attribute
+    // don't do this in componentDidMount() : the <input> already has the autoFocus attribute
     this.focusTextInput();
   };
 
@@ -44,7 +39,7 @@ class TodoInput extends React.Component {
   handleFormSubmit = ( event ) => {
     event.preventDefault(); // prevent form submit
 
-    const todoToAdd = this.state.todoText;
+    const todoToAdd = this.textInput.value.trim();
 
     if ( todoToAdd === '' ) {
       return;
@@ -54,16 +49,8 @@ class TodoInput extends React.Component {
     // by the component which controls this one
     this.props.fnAddTodo( todoToAdd );
 
-    // update private state
-    // once we passed the text of the todo, we can clear the input
-    this.setState({ todoText: '' });
-  };
-
-
-  /** When something is typed in the <input> */
-  handleInputChange = ( event ) => {
-    // keep private state synced with the value of the input
-    this.setState({ todoText: event.target.value });
+    // todo added => we can clear the input
+    this.textInput.value = '';
   };
 
 
@@ -77,8 +64,6 @@ class TodoInput extends React.Component {
             type="text"
             placeholder="Save a new task"
             autoFocus
-            onChange={ this.handleInputChange }
-            value={ this.state.todoText }
 
             // Tell React that we want to associate the <input> ref
             // with the `textInput` that we created before

@@ -14,6 +14,7 @@ Just a simple repository to play with [React](http://reactjs.org/), mostly for t
 Currently :
 - [Class Components](https://reactjs.org/docs/state-and-lifecycle.html) and [Functional Components](https://reactjs.org/docs/components-and-props.html)
 - Components lifecycle methods
+- [Pure Components](https://reactjs.org/docs/react-api.html#reactpurecomponent)
 - [React Refs](https://reactjs.org/docs/refs-and-the-dom.html)
 - [React Fragments](https://reactjs.org/docs/fragments.html)
 - [React Context](https://reactjs.org/docs/context.html)

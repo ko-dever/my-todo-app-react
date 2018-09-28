@@ -25,8 +25,7 @@ class TodosView extends React.Component {
 
     // static value : we don't need to store it the state
     // `currentTodos` will be based on it
-    this.allTodos = [];
-    // this.allTodos = SAMPLE_TODOS;
+    this.allTodos = SAMPLE_TODOS;
 
     const initialFilter = this.getInitialFilter();
 

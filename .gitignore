@@ -22,5 +22,4 @@ yarn-error.log*
 
 
 # Personal
-/original-files
 *.test.js
