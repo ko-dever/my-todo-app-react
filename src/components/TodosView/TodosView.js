@@ -18,14 +18,16 @@ const StyledView = styled.div`
 `;
 
 
+// Private store all of saved todos
+// Don't need to be in component's state :
+// `currentTodos` will be based on it
+let ALL_TODOS = SAMPLE_TODOS;
+
+
 class TodosView extends React.Component {
 
   constructor( props ) {
     super( props );
-
-    // static value : we don't need to store it the state
-    // `currentTodos` will be based on it
-    this.allTodos = SAMPLE_TODOS;
 
     const initialFilter = this.getInitialFilter();
 
@@ -69,7 +71,7 @@ class TodosView extends React.Component {
     };
 
     // merge the new item with the existing ones
-    this.allTodos = [ ...this.allTodos, newTodo ];
+    ALL_TODOS = [ ...ALL_TODOS, newTodo ];
 
     // no need to trigger a render if we add a todo while
     // we are not on the list (filter) of active items
@@ -122,24 +124,22 @@ class TodosView extends React.Component {
   getTodosToDisplay = ( currentFilter = this.state.todosFilter ) => {
     console.log( 'getTodosToDisplay() Called with filter [ %s ]', currentFilter );
 
-    const { allTodos } = this;
-
     // show completed items (can be archived too)
     if ( currentFilter === TODOS_FILTERS.completed.key ) {
-      return allTodos.filter( todo => {
+      return ALL_TODOS.filter( todo => {
         return todo.isCompleted === true;
       });
     }
 
     // show archived items (can be completed too)
     else if ( currentFilter === TODOS_FILTERS.archived.key ) {
-      return allTodos.filter( todo => {
+      return ALL_TODOS.filter( todo => {
         return todo.isArchived === true;
       });
     }
 
     else { // default to active items (active !== completed && !== archived)
-      return allTodos.filter( todo => {
+      return ALL_TODOS.filter( todo => {
         return !todo.isCompleted && !todo.isArchived;
       });
     }
@@ -165,6 +165,7 @@ class TodosView extends React.Component {
     const actionsAllowed = [ 'finish', 'archive', 'delete' ];
 
     // prevent unknown actions
+    // @ts-ignore
     if ( actionsAllowed.includes( action ) === false ) {
       console.error( 'manageTodos() The action [ %s ] is not recognized', action );
       return;
@@ -175,8 +176,9 @@ class TodosView extends React.Component {
 
       const mark = action === 'finish' ? 'isCompleted' : 'isArchived';
 
+
       // find the correct item and mark it
-      for (const todo of this.allTodos) {
+      for (const todo of ALL_TODOS) {
         if ( todo.id === todoId ) {
           console.info( 'manageTodos() Will mark item [ %s ] as [ %s ]', todo.id, mark );
 
@@ -193,7 +195,7 @@ class TodosView extends React.Component {
 
     else { // action === 'delete'
       // get todos with where their ID is different than the one passed in the function
-      this.allTodos = this.allTodos.filter( todo => todo.id !== todoId );
+      ALL_TODOS = ALL_TODOS.filter( todo => todo.id !== todoId );
     }
 
     this.setState({
