@@ -65,13 +65,16 @@ class TodosView extends React.Component {
 
   /** Add a new todo */
   handleAddTodo = ( textNewTodo ) => {
+    const currentDate = new Date();
     const newTodo = {
-      id  : 'todo#' + (+ new Date()), // generate a timestamp
-      text: textNewTodo,
+      id       : 'todo#' + (+currentDate), // generate a timestamp
+      text     : textNewTodo,
+      createdAt: currentDate,
     };
 
     // merge the new item with the existing ones
     ALL_TODOS = [ ...ALL_TODOS, newTodo ];
+    console.info( 'New todo added', newTodo );
 
     // no need to trigger a render if we add a todo while
     // we are not on the list (filter) of active items
@@ -124,25 +127,65 @@ class TodosView extends React.Component {
   getTodosToDisplay = ( currentFilter = this.state.todosFilter ) => {
     console.log( 'getTodosToDisplay() Called with filter [ %s ]', currentFilter );
 
+
+    /**
+     * Sort todos on the specified field
+     * Default to DESCENDING order (most recent date on top)
+     *
+     * @param {Array<{}>} todos - Input Array to sort
+     * @param {String} [field="createdAt"] - Sorting will be done on this field
+     *
+     * @return {Array<{}>} Output array sorted
+     */
+    const sortTodos = function sortTodos( todos, field = 'createdAt' ) {
+      // @ts-ignore
+      // Duplicate our array of todos
+      const arr = Array.from( todos );
+
+      return arr.sort( (itemA, itemB) => {
+        const dateA = itemA[ field ];
+        const dateB = itemB[ field ];
+
+        if ( dateA > dateB ) return -1;
+        if ( dateA < dateB ) return 1;
+        return 0;
+      });
+    };
+
+
+    let filteredTodos = [];
+    let sortField;
+
+
     // show completed items (can be archived too)
     if ( currentFilter === TODOS_FILTERS.completed.key ) {
-      return ALL_TODOS.filter( todo => {
+
+      filteredTodos = ALL_TODOS.filter( todo => {
         return todo.isCompleted === true;
       });
+
+      sortField = 'completedAt';
     }
 
     // show archived items (can be completed too)
     else if ( currentFilter === TODOS_FILTERS.archived.key ) {
-      return ALL_TODOS.filter( todo => {
+
+      filteredTodos = ALL_TODOS.filter( todo => {
         return todo.isArchived === true;
       });
+
+      sortField = 'archivedAt';
     }
 
-    else { // default to active items (active !== completed && !== archived)
-      return ALL_TODOS.filter( todo => {
+    // default to active items (active !== completed and archived)
+    else {
+      filteredTodos = ALL_TODOS.filter( todo => {
         return !todo.isCompleted && !todo.isArchived;
       });
     }
+
+
+    return sortTodos( filteredTodos, sortField );
   };
 
 
@@ -172,20 +215,43 @@ class TodosView extends React.Component {
     }
 
 
-    if ( action !== 'delete' ) {
+    // delete todo : get all todos with ID !== than the one passed in the fuction
+    if ( action === 'delete' ) {
+      ALL_TODOS = ALL_TODOS.filter( todo => todo.id !== todoId );
+    }
 
-      const mark = action === 'finish' ? 'isCompleted' : 'isArchived';
-
+    // finish OR archive
+    else {
 
       // find the correct item and mark it
       for (const todo of ALL_TODOS) {
         if ( todo.id === todoId ) {
-          console.info( 'manageTodos() Will mark item [ %s ] as [ %s ]', todo.id, mark );
 
-          if ( todo[ mark ] ) {
-            delete todo[ mark ];
+          // set default values
+          let stateMark = 'isArchived';
+          let timeMark  = 'archivedAt';
+
+          if ( action === 'finish' ) {
+            stateMark = 'isCompleted';
+            timeMark  = 'completedAt';
+          }
+
+
+          console.info(
+            'manageTodos() Will mark item [ %s ] as [ %s ]',
+            todo.id, stateMark
+          );
+
+
+          // Manage state of the todo
+          // - Already archived => Unarchive + remove date of archiving
+          // - Otherwise add these values to the todo
+          if ( todo[ stateMark ] ) {
+            delete todo[ stateMark ];
+            delete todo[ timeMark ];
           } else {
-            todo[ mark ] = true;
+            todo[ stateMark ] = true;
+            todo[ timeMark ]  = new Date();
           }
 
           break;
@@ -193,10 +259,6 @@ class TodosView extends React.Component {
       }
     }
 
-    else { // action === 'delete'
-      // get todos with where their ID is different than the one passed in the function
-      ALL_TODOS = ALL_TODOS.filter( todo => todo.id !== todoId );
-    }
 
     this.setState({
       currentTodos: this.getTodosToDisplay()
