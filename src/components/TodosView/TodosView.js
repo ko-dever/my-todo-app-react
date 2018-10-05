@@ -246,7 +246,7 @@ class TodosView extends React.Component {
           // Manage state of the todo
           // - Already archived => Unarchive + remove date of archiving
           // - Otherwise add these values to the todo
-          if ( todo[ stateMark ] ) {
+          if ( todo.hasOwnProperty( stateMark ) ) {
             delete todo[ stateMark ];
             delete todo[ timeMark ];
           } else {
