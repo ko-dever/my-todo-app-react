@@ -23,7 +23,6 @@ const TodosFilter = ( props ) => (
 const generateButtons = function generateButtons( activeFilter, fnFilterChange ) {
 
   // get only the filter objects, we don't need the keys
-  // @ts-ignore
   const filters = Object.values( TODOS_FILTERS );
 
   return filters.map( filter => {

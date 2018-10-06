@@ -8,5 +8,6 @@
     "allowSyntheticDefaultImports": true,
     "checkJs": true,
     "jsx": "react",
+    "target": "es2017",
   },
 }

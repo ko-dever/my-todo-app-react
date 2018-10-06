@@ -138,7 +138,6 @@ class TodosView extends React.Component {
      * @return {Array<{}>} Output array sorted
      */
     const sortTodos = function sortTodos( todos, field = 'createdAt' ) {
-      // @ts-ignore
       // Duplicate our array of todos
       const arr = Array.from( todos );
 
@@ -208,7 +207,6 @@ class TodosView extends React.Component {
     const actionsAllowed = [ 'finish', 'archive', 'delete' ];
 
     // prevent unknown actions
-    // @ts-ignore
     if ( actionsAllowed.includes( action ) === false ) {
       console.error( 'manageTodoState() The action [ %s ] is not recognized', action );
       return;
