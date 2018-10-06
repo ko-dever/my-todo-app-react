@@ -182,15 +182,17 @@ class TodosView extends React.Component {
     let filteredTodos = [];
     let sortField;
 
+    const fieldCompleted = 'completedAt';
+
 
     // show completed items (can be archived too)
     if ( currentFilter === TODOS_FILTERS.completed.key ) {
 
       filteredTodos = ALL_TODOS.filter( todo => {
-        return todo.isCompleted === true;
+        return todo.hasOwnProperty( fieldCompleted );
       });
 
-      sortField = 'completedAt';
+      sortField = fieldCompleted;
     }
 
     // show archived items (can be completed too)
@@ -206,7 +208,10 @@ class TodosView extends React.Component {
     // default to active items (active !== completed and archived)
     else {
       filteredTodos = ALL_TODOS.filter( todo => {
-        return !todo.isCompleted && !todo.isArchived;
+        return (
+          todo.hasOwnProperty( fieldCompleted ) === false
+          && !todo.isArchived
+        );
       });
     }
 
@@ -258,8 +263,7 @@ class TodosView extends React.Component {
       const indexTodo = ALL_TODOS.findIndex( todo => todo.id === todoId );
       let updatedTodo = Object.assign( {}, ALL_TODOS[ indexTodo ] );
 
-      const stateMark = action === 'archive' ? 'isArchived' : 'isCompleted';
-      const timeMark  = action === 'archive' ? 'archivedAt' : 'completedAt';
+      const stateMark = action === 'archive' ? 'archivedAt' : 'completedAt';
 
 
       console.info(
@@ -272,8 +276,7 @@ class TodosView extends React.Component {
       if ( updatedTodo.hasOwnProperty( stateMark ) === false ) {
 
         // enable state
-        updatedTodo[ stateMark ] = true;
-        updatedTodo[ timeMark ]  = new Date();
+        updatedTodo[ stateMark ] = new Date();
 
       } else {
         // disable state
@@ -325,7 +328,6 @@ class TodosView extends React.Component {
             //    we can create dynamic keys (prop) in our temp object reusing the same name.
             //    Thus we don't need to care about naming them.
             [ stateMark ]: obj[ stateMark ],
-            [ timeMark  ]: obj[ timeMark ],
 
             // get remaining properties as an object (without the extracted ones above)
             // and overwrite our original item with it

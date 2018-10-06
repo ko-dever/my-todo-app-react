@@ -36,7 +36,7 @@ const TodoItem = ( { todo } ) => (
         // See : https://reactjs.org/docs/fragments.html
         <React.Fragment>
           <button onClick={ () => { complete( todo.id ) } }>
-            { todo.isCompleted ? 'Not finish' : 'Finish' }
+            { todo.completedAt ? 'Not finish' : 'Finish' }
           </button>
 
           <button onClick={ () => { archive( todo.id ) } }>
@@ -76,7 +76,7 @@ TodoItem.propTypes = {
     id         : PropTypes.string.isRequired,
     text       : PropTypes.string.isRequired,
     isArchived : PropTypes.bool,
-    isCompleted: PropTypes.bool,
+    completedAt: PropTypes.instanceOf( Date ),
   }),
 };
 
