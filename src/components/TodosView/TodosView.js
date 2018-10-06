@@ -19,8 +19,7 @@ const StyledView = styled.div`
 
 
 // Private store all of saved todos
-// Don't need to be in component's state :
-// `currentTodos` will be based on it
+// Don't need to be in component's state : `currentTodos` will be based on it
 let ALL_TODOS = SAMPLE_TODOS;
 
 
@@ -41,7 +40,11 @@ class TodosView extends React.Component {
   }
 
 
-  /** Find which initial filter to use */
+  /**
+   * Find which initial filter to use
+   *
+   * @return {String} Name of the filter to apply
+   */
   getInitialFilter() {
     const { initialFilter } = this.props;
     const filterAsked       = TODOS_FILTERS[ initialFilter ];
@@ -63,7 +66,11 @@ class TodosView extends React.Component {
   };
 
 
-  /** Add a new todo */
+  /**
+   * Create and add a new todo to the global list
+   *
+   * @param {String} textNewTodo - Todo's text
+   */
   handleAddTodo = ( textNewTodo ) => {
     const currentDate = new Date();
     const newTodo = {
@@ -86,25 +93,41 @@ class TodosView extends React.Component {
   };
 
 
-  /** Mark a todo as archived */
+  /**
+   * Archive a todo
+   *
+   * @param {String} todoId - Todo's ID to process
+   */
   handleArchiveTodo = ( todoId ) => {
     this.manageTodoState( 'archive', todoId );
   };
 
 
-  /** Delete completely a todo */
+  /**
+   * Delete completely a todo
+   *
+   * @param {String} todoId - Todo's ID to process
+   */
   handleDeleteTodo = ( todoId ) => {
     this.manageTodoState( 'delete', todoId );
   };
 
 
-  /** Mark a todo as completed */
+  /**
+   * Finish a todo (= completed)
+   *
+   * @param {String} todoId - Todo's ID to process
+   */
   handleFinishTodo = ( todoId ) => {
     this.manageTodoState( 'finish', todoId );
   };
 
 
-  /** Handle the selection of a new filter */
+  /**
+   * Update the active filter
+   *
+   * @param {String} newFilter - New filter to apply for the list of todos
+   */
   handleFilterChange = ( newFilter ) => {
     // block if we are still on the same filter
     if ( newFilter === this.state.todosFilter ) {
@@ -123,18 +146,22 @@ class TodosView extends React.Component {
   };
 
 
-  /** Get items to display, according to current filter */
+  /**
+   * Find todos to display according to active filter
+   *
+   * @param {String} [currentFilter=this.state.todosFilter] - Active filter
+   * @return {Array} List of todos
+   */
   getTodosToDisplay = ( currentFilter = this.state.todosFilter ) => {
     console.log( 'getTodosToDisplay() Called with filter [ %s ]', currentFilter );
 
 
     /**
      * Sort todos on the specified field
-     * Default to DESCENDING order (most recent date on top)
+     * Default to DESCENDING order (items with the most recent date on top)
      *
      * @param {Array<{}>} todos - Input Array to sort
      * @param {String} [field="createdAt"] - Sorting will be done on this field
-     *
      * @return {Array<{}>} Output array sorted
      */
     const sortTodos = function sortTodos( todos, field = 'createdAt' ) {
@@ -188,7 +215,12 @@ class TodosView extends React.Component {
   };
 
 
-  /** Perform various actions on one todo */
+  /**
+   * Manage the state of a specified todo
+   *
+   * @param {String} action - Which action to perform on the todo
+   * @param {String} todoId - Todo's ID to process
+   */
   manageTodoState = ( action, todoId ) => {
     if ( !action ) {
       console.error( 'manageTodoState() An action is needed.' );
@@ -314,6 +346,11 @@ class TodosView extends React.Component {
   };
 
 
+  /**
+   * Component's render function
+   *
+   * @return {JSX.Element}
+   */
   render() {
     console.log( '------------------------------------' );
     console.log( 'TodosView render()' );
