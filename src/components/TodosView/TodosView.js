@@ -88,19 +88,19 @@ class TodosView extends React.Component {
 
   /** Mark a todo as archived */
   handleArchiveTodo = ( todoId ) => {
-    this.manageTodos( 'archive', todoId );
+    this.manageTodoState( 'archive', todoId );
   };
 
 
   /** Delete completely a todo */
   handleDeleteTodo = ( todoId ) => {
-    this.manageTodos( 'delete', todoId );
+    this.manageTodoState( 'delete', todoId );
   };
 
 
   /** Mark a todo as completed */
   handleFinishTodo = ( todoId ) => {
-    this.manageTodos( 'finish', todoId );
+    this.manageTodoState( 'finish', todoId );
   };
 
 
@@ -190,14 +190,14 @@ class TodosView extends React.Component {
 
 
   /** Perform various actions on one todo */
-  manageTodos = ( action, todoId ) => {
+  manageTodoState = ( action, todoId ) => {
     if ( !action ) {
-      console.error( 'manageTodos() An action is needed.' );
+      console.error( 'manageTodoState() An action is needed.' );
       return;
     }
 
     if ( !todoId ) {
-      console.error( 'manageTodos() No action possible without an ID.' );
+      console.error( 'manageTodoState() No action possible without an ID.' );
       return;
     }
 
@@ -210,12 +210,12 @@ class TodosView extends React.Component {
     // prevent unknown actions
     // @ts-ignore
     if ( actionsAllowed.includes( action ) === false ) {
-      console.error( 'manageTodos() The action [ %s ] is not recognized', action );
+      console.error( 'manageTodoState() The action [ %s ] is not recognized', action );
       return;
     }
 
 
-    // delete todo : get all todos with ID !== than the one passed in the fuction
+    // delete todo : get all todos with ID !== than the one passed in the function
     if ( action === 'delete' ) {
       ALL_TODOS = ALL_TODOS.filter( todo => todo.id !== todoId );
     }
@@ -223,40 +223,90 @@ class TodosView extends React.Component {
     // finish OR archive
     else {
 
-      // find the correct item and mark it
-      for (const todo of ALL_TODOS) {
-        if ( todo.id === todoId ) {
+      // find the first item (and stop there) that satisfies the condition
+      // and create a copy of the item at this position
+      const indexTodo = ALL_TODOS.findIndex( todo => todo.id === todoId );
+      let updatedTodo = Object.assign( {}, ALL_TODOS[ indexTodo ] );
 
-          // set default values
-          let stateMark = 'isArchived';
-          let timeMark  = 'archivedAt';
-
-          if ( action === 'finish' ) {
-            stateMark = 'isCompleted';
-            timeMark  = 'completedAt';
-          }
+      const stateMark = action === 'archive' ? 'isArchived' : 'isCompleted';
+      const timeMark  = action === 'archive' ? 'archivedAt' : 'completedAt';
 
 
-          console.info(
-            'manageTodos() Will mark item [ %s ] as [ %s ]',
-            todo.id, stateMark
-          );
+      console.info(
+        'manageTodoState() Will mark item [ %s ] as [ %s ]',
+        updatedTodo.id, stateMark
+      );
 
 
-          // Manage state of the todo
-          // - Already archived => Unarchive + remove date of archiving
-          // - Otherwise add these values to the todo
-          if ( todo.hasOwnProperty( stateMark ) ) {
-            delete todo[ stateMark ];
-            delete todo[ timeMark ];
-          } else {
-            todo[ stateMark ] = true;
-            todo[ timeMark ]  = new Date();
-          }
+      // Switch item's state
+      if ( updatedTodo.hasOwnProperty( stateMark ) === false ) {
 
-          break;
-        }
+        // enable state
+        updatedTodo[ stateMark ] = true;
+        updatedTodo[ timeMark ]  = new Date();
+
+      } else {
+        // disable state
+
+        // using `delete` operator
+        // delete updatedTodo[ stateMark ];
+        // delete updatedTodo[ timeMark ];
+
+
+        // using `Reflect.deleteProperty()`
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect/deleteProperty
+        // Reflect.deleteProperty( updatedTodo, stateMark );
+        // Reflect.deleteProperty( updatedTodo, timeMark );
+
+
+        // using the magic of ES6
+        // destructuring, computed prop and spreap operator !
+
+        // 1) Using static aliases
+        // const {
+
+        //   // compute and extract properties into temp variables
+        //   [ stateMark ]: tempStateMark,
+        //   [ timeMark  ]: tempTimeMark,
+
+        //   // get remaining properties
+        //   ...rest
+
+        // } = updatedTodo; // destruct this object
+
+        // // then update our original
+        // updatedTodo = rest;
+
+
+
+        // 2) Using "dynamic aliases"
+        //    This one seems complex for the small change to make,
+        //    but it is just a demonstration of what is possible.
+        const obj = {};
+        ( // evaluate inner expression : we don't need to create new (temp) variables
+          {
+            // compute and extract properties
+            //
+            // `[ prop ]:`
+            // ↳ Compute prop name with dynamic values (our variables)
+            //
+            // `obj[ prop ]`
+            // ↳ instead of manually creating static aliases to computed prop,
+            //    we can create dynamic keys (prop) in our temp object reusing the same name.
+            //    Thus we don't need to care about naming them.
+            [ stateMark ]: obj[ stateMark ],
+            [ timeMark  ]: obj[ timeMark ],
+
+            // get remaining properties as an object (without the extracted ones above)
+            // and overwrite our original item with it
+            ...updatedTodo
+
+          } = updatedTodo // destruct this object
+        );
       }
+
+      // remove and replace the todo at the specified index
+      ALL_TODOS.splice( indexTodo, 1, updatedTodo );
     }
 
 
