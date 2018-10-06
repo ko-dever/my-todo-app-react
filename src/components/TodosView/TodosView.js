@@ -183,6 +183,7 @@ class TodosView extends React.Component {
     let sortField;
 
     const fieldCompleted = 'completedAt';
+    const fieldArchived  = 'archivedAt';
 
 
     // show completed items (can be archived too)
@@ -199,7 +200,7 @@ class TodosView extends React.Component {
     else if ( currentFilter === TODOS_FILTERS.archived.key ) {
 
       filteredTodos = ALL_TODOS.filter( todo => {
-        return todo.isArchived === true;
+        return todo.hasOwnProperty( fieldArchived );
       });
 
       sortField = 'archivedAt';
@@ -210,7 +211,7 @@ class TodosView extends React.Component {
       filteredTodos = ALL_TODOS.filter( todo => {
         return (
           todo.hasOwnProperty( fieldCompleted ) === false
-          && !todo.isArchived
+          && todo.hasOwnProperty( fieldArchived ) === false
         );
       });
     }

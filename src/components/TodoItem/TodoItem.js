@@ -40,12 +40,12 @@ const TodoItem = ( { todo } ) => (
           </button>
 
           <button onClick={ () => { archive( todo.id ) } }>
-            { todo.isArchived ? 'Unarchive' : 'Archive' }
+            { todo.archivedAt ? 'Unarchive' : 'Archive' }
           </button>
 
           {/* "Delete" button only displayed for archived items */}
           {/* TODO: a todo should be removable at any time */}
-          { ! todo.isArchived ? ''
+          { ! todo.archivedAt ? ''
             : <button onClick={ () => { remove( todo.id ) } }>
                 Delete
               </button>
@@ -75,7 +75,7 @@ TodoItem.propTypes = {
   todo: PropTypes.shape({
     id         : PropTypes.string.isRequired,
     text       : PropTypes.string.isRequired,
-    isArchived : PropTypes.bool,
+    archivedAt : PropTypes.instanceOf( Date ),
     completedAt: PropTypes.instanceOf( Date ),
   }),
 };
