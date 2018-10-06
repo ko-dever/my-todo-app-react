@@ -15,6 +15,13 @@ const StyledItem = styled.li`
 `;
 
 
+/**
+ * Component's function
+ *
+ * @param {Object} props - Component's props
+ * @param {Object} props.todo - A Todo object
+ * @return {JSX.Element}
+ */
 const TodoItem = ( { todo } ) => (
   <StyledItem>
 
@@ -36,8 +43,8 @@ const TodoItem = ( { todo } ) => (
             { todo.isArchived ? 'Unarchive' : 'Archive' }
           </button>
 
-          {/* 'Delete' button only displayed for archived items */}
-          {/* TODO : an item should be removable at any time */}
+          {/* "Delete" button only displayed for archived items */}
+          {/* TODO: a todo should be removable at any time */}
           { ! todo.isArchived ? ''
             : <button onClick={ () => { remove( todo.id ) } }>
                 Delete
