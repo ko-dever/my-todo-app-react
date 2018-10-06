@@ -9,5 +9,6 @@
     "checkJs": true,
     "jsx": "react",
     "target": "es2017",
+    "module": "commonjs",
   },
 }
