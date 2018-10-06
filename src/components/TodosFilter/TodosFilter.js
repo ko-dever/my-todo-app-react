@@ -11,6 +11,14 @@ const TODOS_FILTERS = Object.freeze({
 });
 
 
+/**
+ * Component's function
+ *
+ * @param {Object} props - Component's props
+ * @param {String} props.activeFilter - Active todos filter
+ * @param {Function} props.fnFilterChange - Action to do when a filter is selected
+ * @return {JSX.Element}
+ */
 const TodosFilter = ( props ) => (
   <StyledFilter>
 
@@ -20,6 +28,13 @@ const TodosFilter = ( props ) => (
 );
 
 
+/**
+ * Create the list of buttons for the filters
+ *
+ * @param {String} activeFilter - Active todos filter
+ * @param {Function} fnFilterChange - Action to do when a filter is selected
+ * @return {Array} List of generated buttons
+ */
 const generateButtons = function generateButtons( activeFilter, fnFilterChange ) {
 
   // get only the filter objects, we don't need the keys
