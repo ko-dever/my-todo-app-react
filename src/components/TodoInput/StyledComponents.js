@@ -7,6 +7,7 @@ const StyledWrapper = styled.div`
 
 
 const inputPadding = '10px';
+
 const StyledInput = styled.input`
   width  : calc( 100% - (${inputPadding} * 2) );
   height : 40px;
