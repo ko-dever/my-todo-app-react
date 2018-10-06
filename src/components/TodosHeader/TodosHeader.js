@@ -9,6 +9,13 @@ const StyledHeader = styled.header`
 `;
 
 
+/**
+ * Component's function
+ *
+ * @param {Object} props - Component's props
+ * @param {Number} props.nbTodos - Number of todos currently displayed
+ * @return {JSX.Element}
+ */
 const TodosHeader = ( { nbTodos }) => (
   <StyledHeader>
 
@@ -18,7 +25,6 @@ const TodosHeader = ( { nbTodos }) => (
       ? ''
       : ` (#${ nbTodos })`
     }
-
 
   </StyledHeader>
 );
