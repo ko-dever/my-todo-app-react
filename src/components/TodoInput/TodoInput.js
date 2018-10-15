@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { StyledWrapper, StyledInput } from './StyledComponents';
+import { StyledWrapper, StyledInput } from './InputStyledComponents';
 
 
 // we could have used `React.PureComponent` instead of `React.Component` to take advantage

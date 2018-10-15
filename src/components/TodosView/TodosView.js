@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
+import { StyledView } from './ViewStyledComponents';
 import TodosHeader from '../TodosHeader';
 import TodoInput from '../TodoInput';
 import TodosFilter, { TODOS_FILTERS } from '../TodosFilter';
@@ -9,13 +9,6 @@ import TodosList from '../TodosList';
 
 import { SAMPLE_TODOS } from '../../sample-data';
 import { ContextTodoItems } from '../../contexts/ContextTodoItems';
-
-
-const StyledView = styled.div`
-  width : 500px;
-  margin: auto;
-  background-color: rgb(203, 203, 203);
-`;
 
 
 // Private store all of saved todos

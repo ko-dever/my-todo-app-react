@@ -1,18 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
+import { StyledItem } from './ItemStyledComponents';
 import { ContextTodoItems } from '../../contexts/ContextTodoItems';
-
-
-const StyledItem = styled.li`
-  margin-bottom: 10px;
-
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
-`;
 
 
 /**

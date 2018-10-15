@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { StyledFilter, StyledButton } from './StyledComponents';
+import { StyledFilter, StyledButton } from './FilterStyledComponents';
 
 
 const TODOS_FILTERS = Object.freeze({

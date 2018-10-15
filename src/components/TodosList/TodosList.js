@@ -1,13 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 
+import { StyledList } from './ListStyledComponents';
 import TodoItem from '../TodoItem';
-
-
-const StyledList = styled.div`
-  margin-top: 20px;
-`;
 
 
 /**
