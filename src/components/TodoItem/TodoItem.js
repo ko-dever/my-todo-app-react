@@ -61,7 +61,7 @@ const TodoItem = ( { todo } ) => (
 // Component's default props
 TodoItem.defaultProps = {
   todo: {
-    id  : 'todo#_' + (+new Date()),
+    id  : 'todo#' + (+new Date()),
     text: 'TODO_DEFAULT_TEXT',
   },
 };

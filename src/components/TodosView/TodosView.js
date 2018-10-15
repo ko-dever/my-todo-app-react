@@ -262,7 +262,7 @@ class TodosView extends React.Component {
       // find the first item (and stop there) that satisfies the condition
       // and create a copy of the item at this position
       const indexTodo = ALL_TODOS.findIndex( todo => todo.id === todoId );
-      let updatedTodo = Object.assign( {}, ALL_TODOS[ indexTodo ] );
+      let updatedTodo = { ...ALL_TODOS[ indexTodo ] };
 
       const stateMark = action === 'archive' ? 'archivedAt' : 'completedAt';
 
