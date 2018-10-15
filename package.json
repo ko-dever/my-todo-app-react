@@ -2,6 +2,10 @@
   "name": "my-todo-app",
   "version": "1.0.0",
   "private": true,
+  "config": {
+    "DIR_BUILD": "./build",
+    "DEPLOY_DOMAIN": "demo-react-todo.surge.sh"
+  },
   "dependencies": {
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
@@ -9,11 +13,19 @@
     "react-scripts": "2.0.4",
     "styled-components": "^3.4.9"
   },
+  "devDependencies": {
+    "surge": "^0.20.1"
+  },
   "scripts": {
     "start": "react-scripts start",
+
     "build": "react-scripts build",
-    "prebuild": "rm -rf ./build/",
-    "postbuild": "echo ko-dever.surge.sh > build/CNAME && surge -p ./build/",
+    "prebuild": "rm -rf $npm_package_config_DIR_BUILD",
+    "postbuild": "npm run deploy",
+
+    "deploy": "npx surge $npm_package_config_DIR_BUILD $npm_package_config_DEPLOY_DOMAIN",
+    "undeploy": "npx surge teardown $npm_package_config_DEPLOY_DOMAIN",
+
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
