@@ -10,6 +10,7 @@ import {
 import {
   ButtonComplete,
   ButtonArchive,
+  ButtonDelete,
 } from '../TodoItemButtons';
 
 
@@ -46,13 +47,9 @@ const TodoItem = ( { todo } ) => (
           />
 
 
-          {/* "Delete" button only displayed for archived items */}
-          {/* TODO: a todo should be removable at any time */}
-          { ! todo.archivedAt ? ''
-            : <button onClick={ () => { remove( todo.id ) } }>
-                Delete
-              </button>
-          }
+          <ButtonDelete
+            onClick={ () => { remove( todo.id ) } }
+          />
 
         </React.Fragment>
 

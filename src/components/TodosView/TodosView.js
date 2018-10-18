@@ -102,7 +102,18 @@ class TodosView extends React.Component {
    * @param {String} todoId - Todo's ID to process
    */
   handleDeleteTodo = ( todoId ) => {
-    this.manageTodoState( 'delete', todoId );
+
+    const todo = ALL_TODOS.find( todo => todo.id === todoId );
+
+    const msgConfirm = '' +
+      'Are sure you want to delete this todo ?' +
+      '\n\n' +
+      todo.text;
+
+
+    if ( window.confirm( msgConfirm ) ) {
+      this.manageTodoState( 'delete', todoId );
+    }
   };
 
 
