@@ -7,7 +7,10 @@ import {
   StyledTitle
 } from './ItemStyledComponents';
 
-import { ButtonComplete } from '../TodoItemButtons';
+import {
+  ButtonComplete,
+  ButtonArchive,
+} from '../TodoItemButtons';
 
 
 /**
@@ -33,11 +36,15 @@ const TodoItem = ( { todo } ) => (
             isCompleted={ todo.completedAt ? true : false }
           />
 
+
           <StyledTitle>{ todo.text }</StyledTitle>
 
-          <button onClick={ () => { archive( todo.id ) } }>
-            { todo.archivedAt ? 'Unarchive' : 'Archive' }
-          </button>
+
+          <ButtonArchive
+            onClick={ () => { archive( todo.id ) } }
+            isArchived={ todo.archivedAt ? true : false }
+          />
+
 
           {/* "Delete" button only displayed for archived items */}
           {/* TODO: a todo should be removable at any time */}
