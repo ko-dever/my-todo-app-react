@@ -10,14 +10,19 @@ import TodoItem from '../TodoItem';
  *
  * @param {Object} props - Component's props
  * @param {Array} props.todos - List of todos
- * @return {JSX.Element}
+ * @return {JSX.Element|HTMLElement}
  */
 const TodosList = ( { todos } ) => (
-  <StyledList>
 
-    { generateTodos( todos ) }
+  todos.length === 0
 
-  </StyledList>
+    ? <div>
+        <em>Aucune tâche</em>
+      </div>
+
+    : <StyledList>
+        { generateTodos( todos ) }
+      </StyledList>
 );
 
 
@@ -25,21 +30,15 @@ const TodosList = ( { todos } ) => (
  * Create the list of todos or a text if the list is empty
  *
  * @param {Array} todos - List of todos
- * @return {JSX.Element} List of generated todos
+ * @return {Array} List of generated todos
  */
 const generateTodos = function generateTodos( todos ) {
-  if ( todos.length === 0 ) {
-    return <em>Aucune tâche</em>;
-  }
-
-  const markup = todos.map( todo => (
+  return todos.map( todo => (
     <TodoItem
       key={ todo.id }
       todo={ todo }
     />
   ));
-
-  return <ul>{ markup }</ul>;
 };
 
 

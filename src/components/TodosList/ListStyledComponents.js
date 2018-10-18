@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 
 
-const StyledList = styled.div`
-  margin-top: 20px;
+const StyledList = styled.ul`
+  background-color: red;
+
+  list-style: none;
+  padding: 0;
 `;
 
 
