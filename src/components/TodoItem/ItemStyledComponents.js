@@ -2,13 +2,24 @@ import styled from 'styled-components';
 
 
 const StyledItem = styled.li`
-  margin-bottom: 10px;
+  background-color: orange;
 
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
+  display: flex;
+  align-items: center;
+
+  height: 35px;
+  margin : 0 5px 5px;
+
+  white-space: nowrap;
 `;
 
 
-export { StyledItem };
+const StyledTitle = styled.span`
+  flex-grow: 1;
+`;
+
+
+export {
+  StyledItem,
+  StyledTitle,
+};

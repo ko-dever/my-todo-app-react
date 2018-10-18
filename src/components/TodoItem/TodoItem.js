@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { StyledItem } from './ItemStyledComponents';
 import { ContextTodoItems } from '../../contexts/ContextTodoItems';
+import {
+  StyledItem,
+  StyledTitle
+} from './ItemStyledComponents';
 
 
 /**
@@ -14,9 +17,6 @@ import { ContextTodoItems } from '../../contexts/ContextTodoItems';
  */
 const TodoItem = ( { todo } ) => (
   <StyledItem>
-
-    <span>{ todo.text }</span>
-
     <ContextTodoItems.Consumer>
       { ({ complete, archive, remove }) => (
         // `delete` is already a reserved keyword
@@ -25,9 +25,12 @@ const TodoItem = ( { todo } ) => (
         // them inside a useless extra node like a <div>
         // See : https://reactjs.org/docs/fragments.html
         <React.Fragment>
+
           <button onClick={ () => { complete( todo.id ) } }>
             { todo.completedAt ? 'Not finish' : 'Finish' }
           </button>
+
+          <StyledTitle>{ todo.text }</StyledTitle>
 
           <button onClick={ () => { archive( todo.id ) } }>
             { todo.archivedAt ? 'Unarchive' : 'Archive' }
@@ -41,9 +44,9 @@ const TodoItem = ( { todo } ) => (
               </button>
           }
         </React.Fragment>
+
       )}
     </ContextTodoItems.Consumer>
-
   </StyledItem>
 );
 
