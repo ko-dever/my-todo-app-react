@@ -179,12 +179,13 @@ class TodosView extends React.Component {
     const fieldArchived  = 'archivedAt';
 
 
-    // show completed items (can be archived too)
+    // show completed items (but not archived)
     if ( currentFilter === TODOS_FILTERS.completed.key ) {
 
-      filteredTodos = ALL_TODOS.filter( todo => {
-        return todo.hasOwnProperty( fieldCompleted );
-      });
+      filteredTodos = ALL_TODOS.filter( todo => (
+        todo.hasOwnProperty( fieldCompleted )
+        && todo.hasOwnProperty( fieldArchived ) === false
+      ));
 
       sortField = fieldCompleted;
     }
@@ -192,21 +193,19 @@ class TodosView extends React.Component {
     // show archived items (can be completed too)
     else if ( currentFilter === TODOS_FILTERS.archived.key ) {
 
-      filteredTodos = ALL_TODOS.filter( todo => {
-        return todo.hasOwnProperty( fieldArchived );
-      });
+      filteredTodos = ALL_TODOS.filter( todo => (
+        todo.hasOwnProperty( fieldArchived )
+      ));
 
       sortField = 'archivedAt';
     }
 
     // default to active items (active !== completed and archived)
     else {
-      filteredTodos = ALL_TODOS.filter( todo => {
-        return (
-          todo.hasOwnProperty( fieldCompleted ) === false
-          && todo.hasOwnProperty( fieldArchived ) === false
-        );
-      });
+      filteredTodos = ALL_TODOS.filter( todo => (
+        todo.hasOwnProperty( fieldCompleted ) === false
+        && todo.hasOwnProperty( fieldArchived ) === false
+      ));
     }
 
 
