@@ -4,3 +4,14 @@ body {
   font-family: sans-serif;
   background-color: gray;
 }
+
+
+/* Custom class name
+ * This class is commented but can be used !
+ *
+ * Its name is derived for "icono-checkCircle" but without the check mark inside
+ * the circle. If the class includes "Circle" (uppercase matters), a circle
+ * will be rendered, so I just need to use a random class including this word.
+ * For example I could totally use "icono-aaaCircle" or "icono-fooBarBazCircle"
+ * -------------------------------------------------- */
+/* .icono-customEmptyCircle {} */

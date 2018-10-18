@@ -16,6 +16,9 @@ const StyledItem = styled.li`
 
 const StyledTitle = styled.span`
   flex-grow: 1;
+  margin-top : 3px;
+  padding-left : 5px;
+  padding-right: 5px;
 `;
 
 

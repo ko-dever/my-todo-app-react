@@ -7,6 +7,8 @@ import {
   StyledTitle
 } from './ItemStyledComponents';
 
+import { ButtonComplete } from '../TodoItemButtons';
+
 
 /**
  * Component's function
@@ -26,9 +28,10 @@ const TodoItem = ( { todo } ) => (
         // See : https://reactjs.org/docs/fragments.html
         <React.Fragment>
 
-          <button onClick={ () => { complete( todo.id ) } }>
-            { todo.completedAt ? 'Not finish' : 'Finish' }
-          </button>
+          <ButtonComplete
+            onClick={ () => { complete( todo.id ) } }
+            isCompleted={ todo.completedAt ? true : false }
+          />
 
           <StyledTitle>{ todo.text }</StyledTitle>
 
@@ -43,6 +46,7 @@ const TodoItem = ( { todo } ) => (
                 Delete
               </button>
           }
+
         </React.Fragment>
 
       )}
