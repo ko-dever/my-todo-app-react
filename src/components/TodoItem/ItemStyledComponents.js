@@ -2,8 +2,6 @@ import styled from 'styled-components';
 
 
 const StyledItem = styled.li`
-  background-color: orange;
-
   display: flex;
   align-items: center;
 

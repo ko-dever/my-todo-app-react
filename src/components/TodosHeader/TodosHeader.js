@@ -14,7 +14,7 @@ import { StyledHeader } from './HeaderStyledComponents';
 const TodosHeader = ( { nbTodos }) => (
   <StyledHeader>
 
-    <strong>My first TODO app</strong>
+    <strong>My To-Do App</strong>
 
     { typeof nbTodos === 'undefined'
       ? ''

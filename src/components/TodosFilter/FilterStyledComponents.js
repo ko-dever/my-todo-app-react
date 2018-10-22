@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 const StyledFilter = styled.div`
   margin-top: 5px;
-  background-color: orange;
   text-align: center;
 `;
 
