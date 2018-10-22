@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { ContextTodoItems } from '../../contexts/ContextTodoItems';
+
 import {
   StyledItem,
   StyledTitle
@@ -14,72 +15,96 @@ import {
 } from '../TodoItemButtons';
 
 
-/**
- * Component's function
- *
- * @param {Object} props - Component's props
- * @param {Object} props.todo - A Todo object
- * @return {JSX.Element}
- */
-const TodoItem = ( { todo } ) => (
-  <StyledItem>
-    <ContextTodoItems.Consumer>
-      { ({ complete, archive, remove }) => (
-        // `delete` is already a reserved keyword
+class TodoItem extends React.Component {
 
-        // Fragments : return multiple items without encapsulating
-        // them inside a useless extra node like a <div>
-        // See : https://reactjs.org/docs/fragments.html
-        <React.Fragment>
-
-          <ButtonComplete
-            onClick={ () => { complete( todo.id ) } }
-            isCompleted={ todo.completedAt ? true : false }
-          />
+  static defaultProps = {
+    todo: {
+      id  : 'todo#' + (+new Date()),
+      text: 'TODO_DEFAULT_TEXT',
+    },
+  };
 
 
-          <StyledTitle>{ todo.text }</StyledTitle>
+  static propTypes = {
+    // This component is used in a loop, and thus it requires a `key` prop, but
+    // it must not be checked here as it is only for React internal's mechanisms
+
+    todo: PropTypes.shape({
+      id         : PropTypes.string.isRequired,
+      text       : PropTypes.string.isRequired,
+      createdAt  : PropTypes.instanceOf( Date ),
+      archivedAt : PropTypes.instanceOf( Date ),
+      completedAt: PropTypes.instanceOf( Date ),
+    }),
+  };
 
 
-          <ButtonArchive
-            onClick={ () => { archive( todo.id ) } }
-            isArchived={ todo.archivedAt ? true : false }
-          />
+  state = {
+    mouseIsOver: false,
+  };
 
 
-          <ButtonDelete
-            onClick={ () => { remove( todo.id ) } }
-          />
-
-        </React.Fragment>
-
-      )}
-    </ContextTodoItems.Consumer>
-  </StyledItem>
-);
+  handleMouseEnter = () => {
+    this.setState( prevState => ({
+      mouseIsOver: !prevState.mouseIsOver,
+    }));
+  };
 
 
-// Component's default props
-TodoItem.defaultProps = {
-  todo: {
-    id  : 'todo#' + (+new Date()),
-    text: 'TODO_DEFAULT_TEXT',
-  },
-};
+  handleMouseLeave = () => {
+    this.setState( prevState => ({
+      mouseIsOver: !prevState.mouseIsOver,
+    }));
+  };
 
 
-// Component props typechecking
-TodoItem.propTypes = {
-  // This component is used in a loop, and thus it requires a `key` prop.
-  // But this `key`, proper to React internal's mechanisms, must not be checked here
+  render() {
+    const { todo } = this.props;
 
-  todo: PropTypes.shape({
-    id         : PropTypes.string.isRequired,
-    text       : PropTypes.string.isRequired,
-    archivedAt : PropTypes.instanceOf( Date ),
-    completedAt: PropTypes.instanceOf( Date ),
-  }),
-};
+    return (
+      <StyledItem
+        onMouseEnter={ this.handleMouseEnter }
+        onMouseLeave={ this.handleMouseLeave }
+      >
+        <ContextTodoItems.Consumer>
+          { ({ complete, archive, remove }) => (
+            // `delete` is already a reserved keyword
+
+            // Fragments : return multiple items without encapsulating
+            // them inside a useless extra node like a <div>
+            // See : https://reactjs.org/docs/fragments.html
+            <React.Fragment>
+
+              <ButtonComplete
+                onClick={ () => { complete( todo.id ) } }
+                isCompleted={ todo.completedAt ? true : false }
+              />
+
+
+              <StyledTitle>{ todo.text }</StyledTitle>
+
+
+              { this.state.mouseIsOver && (
+                <React.Fragment>
+                  <ButtonArchive
+                    onClick={ () => { archive( todo.id ) } }
+                    isArchived={ todo.archivedAt ? true : false }
+                  />
+
+
+                  <ButtonDelete
+                    onClick={ () => { remove( todo.id ) } }
+                  />
+                </React.Fragment>
+              )}
+
+            </React.Fragment>
+          )}
+        </ContextTodoItems.Consumer>
+      </StyledItem>
+    );
+  }
+}
 
 
 export default TodoItem;

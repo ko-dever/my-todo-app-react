@@ -8,6 +8,7 @@ const StyledItem = styled.li`
   height: 35px;
   margin : 0 5px 5px;
 
+  overflow: hidden;
   white-space: nowrap;
 `;
 
