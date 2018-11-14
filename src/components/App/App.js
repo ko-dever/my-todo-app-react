@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import RepoLink from '../RepoLink';
 import TodosView from '../TodosView';
 
 
@@ -10,11 +11,15 @@ const StyledApp = styled.div`
 
 
 export default () => (
+  <React.Fragment>
 
-  <StyledApp>
+    <RepoLink />
 
-    <TodosView />
+    <StyledApp>
 
-  </StyledApp>
+      <TodosView />
 
+    </StyledApp>
+
+  </React.Fragment>
 );
