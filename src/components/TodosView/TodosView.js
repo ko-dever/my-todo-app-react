@@ -376,9 +376,9 @@ class TodosView extends React.Component {
         />
 
         <ContextTodoItems.Provider value={{
-          remove  : this.handleDeleteTodo,
-          archive : this.handleArchiveTodo,
-          complete: this.handleFinishTodo,
+          removeTodo  : this.handleDeleteTodo,
+          archiveTodo : this.handleArchiveTodo,
+          completeTodo: this.handleFinishTodo,
         }}>
 
           <TodosList todos={ currentTodos } />

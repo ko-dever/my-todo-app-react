@@ -44,6 +44,13 @@ class TodoItem extends React.Component {
   };
 
 
+  // Lets us consume the nearest current value of that Context type using this.context
+  // https://reactjs.org/docs/context.html#classcontexttype
+  // New way to consume Context in React v16.6
+  // https://github.com/facebook/react/blob/master/CHANGELOG.md#react-dom-2
+  static contextType = ContextTodoItems;
+
+
   handleMouseEnter = () => {
     this.setState( prevState => ({
       mouseIsOver: !prevState.mouseIsOver,
@@ -60,47 +67,45 @@ class TodoItem extends React.Component {
 
   render() {
     const { todo } = this.props;
+    const context  = this.context;
 
     return (
       <StyledItem
         onMouseEnter={ this.handleMouseEnter }
         onMouseLeave={ this.handleMouseLeave }
       >
-        <ContextTodoItems.Consumer>
-          { ({ complete, archive, remove }) => (
-            // `delete` is already a reserved keyword
 
-            // Fragments : return multiple items without encapsulating
-            // them inside a useless extra node like a <div>
-            // See : https://reactjs.org/docs/fragments.html
+        {/*
+          Fragments : return multiple items without wrapping them inside a useless extra node
+          See : https://reactjs.org/docs/fragments.html
+        */}
+        <React.Fragment>
+
+          <ButtonComplete
+            onClick={ () => { context.completeTodo( todo.id ) } }
+            isCompleted={ todo.completedAt ? true : false }
+          />
+
+
+          <StyledTitle>{ todo.text }</StyledTitle>
+
+
+          { this.state.mouseIsOver && (
             <React.Fragment>
-
-              <ButtonComplete
-                onClick={ () => { complete( todo.id ) } }
-                isCompleted={ todo.completedAt ? true : false }
+              <ButtonArchive
+                onClick={ () => { context.archiveTodo( todo.id ) } }
+                isArchived={ todo.archivedAt ? true : false }
               />
 
 
-              <StyledTitle>{ todo.text }</StyledTitle>
-
-
-              { this.state.mouseIsOver && (
-                <React.Fragment>
-                  <ButtonArchive
-                    onClick={ () => { archive( todo.id ) } }
-                    isArchived={ todo.archivedAt ? true : false }
-                  />
-
-
-                  <ButtonDelete
-                    onClick={ () => { remove( todo.id ) } }
-                  />
-                </React.Fragment>
-              )}
-
+              <ButtonDelete
+                onClick={ () => { context.removeTodo( todo.id ) } }
+              />
             </React.Fragment>
           )}
-        </ContextTodoItems.Consumer>
+
+        </React.Fragment>
+
       </StyledItem>
     );
   }

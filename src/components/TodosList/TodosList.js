@@ -10,7 +10,7 @@ import TodoItem from '../TodoItem';
  *
  * @param {Object} props - Component's props
  * @param {Array} props.todos - List of todos
- * @return {JSX.Element|HTMLElement}
+ * @return {JSX.Element}
  */
 const TodosList = ( { todos } ) => (
 
