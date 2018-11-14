@@ -1,7 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { StyledList } from './ListStyledComponents';
+import {
+  StyledList,
+  StyledEmptyList,
+} from './ListStyledComponents';
+
 import TodoItem from '../TodoItem';
 
 
@@ -16,9 +20,9 @@ const TodosList = ( { todos } ) => (
 
   todos.length === 0
 
-    ? <div>
-        <em>Aucune tâche</em>
-      </div>
+    ? <StyledEmptyList>
+        This list is empty
+      </StyledEmptyList>
 
     : <StyledList>
         { generateTodos( todos ) }
