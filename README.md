@@ -4,9 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # What is this repository ?
 
-Nothing serious.
-
-Just a simple repository to play with [React](http://reactjs.org/), mostly for testing purposes, for trying and implementng some concepts specific to this library.
+Simple repository to play and interact with [React](http://reactjs.org/)], mostly for testing purposes. To try and implement some concepts specific to this library.
 
 
 # What concepts are covered in this project ?
