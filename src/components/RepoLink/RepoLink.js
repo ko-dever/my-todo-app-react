@@ -11,7 +11,7 @@ import iconBranch from './code-branch.svg';
 
 const RepoLink = () => (
   <StyledLink
-    href="https://bitbucket.org/DrNova/react-my-todo-app"
+    href="https://github.com/ko-dever/my-todo-app-react"
     target="_blank"
 
     // target="_blank" without rel="noopener noreferrer"
